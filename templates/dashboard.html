@@ -1,33 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>dashboard</title>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
 
-
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <nav>
-    <a href="/dashboard">Dashboard</a>
-    <a href="/items">Items</a>
-    <a href="/contact">Contact</a>
-    <a href="/logout">Logout</a>
-    </nav>
+    <!-- Welcome -->
+    <h1 class="welcome">Welcome {{ email }}</h1>
 
-<h1>Welcome {{ session['user'] }}</h1>
+    <!-- Cards -->
+    <div class="container">
 
-<div class="card">
-    <h2>My Rentals</h2>
-</div>
+        <div class="card" onclick="location.href='/rentals'">
+            📦 My Rentals
+        </div>
 
-<div class="card">
-    <h2>Available Items</h2>
-</div>
+        <div class="card" onclick="location.href='/items'">
+            🛒 Available Items
+        </div>
 
-<div class="card">
-    <h2>My Profile</h2>
+        <div class="card" onclick="location.href='/profile'">
+            👤 My Profile
+        </div>
+
+        <div class="card" onclick="location.href='/logout'">
+            🚪 Logout
+        </div>
+
+    </div>
+
+    <div class="card" onclick="location.href='/add_item'">
+    ➕ Add Item
 </div>
 
 </body>

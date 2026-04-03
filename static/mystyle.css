@@ -150,46 +150,50 @@ footer {
     width: 100%;
 }
 
-/* dashboard styles */
-
-
-/* navigation bar */
-nav {
-    background-color: #333;
-    padding: 15px;
+.welcome {
     text-align: center;
+    margin-top: 40px;
+    font-size: 32px;
+    font-weight: 600;
 }
 
-nav a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
+.container {
+    margin-top: 50px;
 }
 
-nav a:hover {
-    color: #00ffcc;
+
+
+
+/* Title */
+.title {
+    text-align: center;
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
-/* dashboard cards */
-.card {
-    display: inline-block;
-    width: 250px;
-    margin: 20px;
+/* Container */
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
     padding: 20px;
-    background-color: #f4f4f4;
+}
+
+/* Card */
+.item-card {
+    background: white;
+    padding: 15px;
     border-radius: 10px;
     text-align: center;
-}
-
-.card:hover {
-    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     transition: 0.3s;
+    font-size: 14px;
 }
 
-/*body styling*/
-body {
-    font-family: Arial;
-    background-color: #f0f2f5;
-    text-align: center;
+/* Hover effect */
+.item-card:hover {
+    transform: scale(1.05);
+    background: #4ca1af;
+    color: white;
 }

@@ -287,6 +287,33 @@ button:hover {
 
 
 /* =========================
+   CONTACT BUTTON (SIMPLE)
+========================= */
+
+.contact-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 22px;
+
+    background-color: #1abc9c;
+    color: white;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    border-radius: 6px;
+
+    transition: 0.3s ease;
+}
+
+/* Hover */
+.contact-btn:hover {
+    background-color: #16a085;
+}
+
+
+/* =========================
    FOOTER (START)
 ========================= */
 footer {

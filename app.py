@@ -4,7 +4,10 @@ import mysql.connector
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# Database connection
+
+# =========================
+# DATABASE CONNECTION
+# =========================
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -14,13 +17,20 @@ db = mysql.connector.connect(
 
 cursor = db.cursor()
 
-# Home page
+
+
+
+# =========================
+# HOME PAGE
+# =========================
 @app.route('/')
 def home():
     return render_template('home.html')
 
 
-# Register page
+# =========================
+# REGISTER
+# =========================
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -29,8 +39,7 @@ def register():
         Password = request.form['Password']
 
         query = "INSERT INTO register (Full_Name, Email, Password) VALUES (%s, %s, %s)"
-        values = (Full_Name, Email, Password)
-        cursor.execute(query, values)
+        cursor.execute(query, (Full_Name, Email, Password))
         db.commit()
 
         return redirect(url_for('login'))
@@ -38,76 +47,87 @@ def register():
     return render_template("register.html")
 
 
-# Login page
+# =========================
+# LOGIN
+# =========================
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['Email']
         password = request.form['Password']
 
-        query = "SELECT * FROM register WHERE Email = %s AND Password = %s"
-        values = (email, password)
-        cursor.execute(query, values)
+        query = "SELECT * FROM register WHERE Email=%s AND Password=%s"
+        cursor.execute(query, (email, password))
         user = cursor.fetchone()
 
         if user:
             session['email'] = user[2]   # email
-            session['name'] = user[1]    # ✅ name store
+            session['name'] = user[1]    # name
             return redirect(url_for('dashboard'))
         else:
             return "Invalid email or password."
 
     return render_template('login.html')
 
-# Dashboard
+
+# =========================
+# DASHBOARD
+# =========================
 @app.route('/dashboard')
 def dashboard():
-    if 'email' in session:
-        return render_template(
-            'dashboard.html',
-            name=session['name'],
-            email=session['email']
-        )
-    else:
+    if 'email' not in session:
         return redirect(url_for('login'))
 
+    return render_template(
+        'dashboard.html',
+        name=session['name'],
+        email=session['email']
+    )
 
-# Logout (FIXED INDENTATION)
+
+# =========================
+# LOGOUT
+# =========================
 @app.route('/logout')
 def logout():
-    session.pop('email', None)
+    session.clear()   # ✅ full session clear
     return redirect(url_for('login'))
 
 
-# Contact page
+# =========================
+# CONTACT
+# =========================
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
 
 
-# Add item
+# =========================
+# ADD ITEM
+# =========================
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
-    if 'email' not in session:   # ✅ safety
-        return redirect('/login')
+    if 'email' not in session:
+        return redirect(url_for('login'))
 
     if request.method == 'POST':
         name = request.form['name']
         price = request.form['price']
         contact = request.form['contact']
-        email = session['email']   # ✅ now correct
+        email = session['email']
 
         query = "INSERT INTO items (name, price, contact, email) VALUES (%s, %s, %s, %s)"
-        values = (name, price, contact, email)
-        cursor.execute(query, values)
+        cursor.execute(query, (name, price, contact, email))
         db.commit()
 
-        return redirect('/items')
+        return redirect(url_for('my_items'))   # ✅ better UX
 
     return render_template('add_item.html')
 
 
-# Show items (ONLY ONE ROUTE)
+# =========================
+# ALL ITEMS
+# =========================
 @app.route('/items')
 def show_items():
     cursor.execute("SELECT * FROM items")
@@ -116,10 +136,13 @@ def show_items():
     return render_template('items.html', items=data)
 
 
+# =========================
+# MY ITEMS (USER ONLY)
+# =========================
 @app.route('/my_items')
 def my_items():
     if 'email' not in session:
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     email = session['email']
 
@@ -130,5 +153,8 @@ def my_items():
     return render_template('my_items.html', items=data)
 
 
+# =========================
+# RUN APP
+# =========================
 if __name__ == '__main__':
     app.run(debug=True)

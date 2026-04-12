@@ -116,5 +116,19 @@ def show_items():
     return render_template('items.html', items=data)
 
 
+@app.route('/my_items')
+def my_items():
+    if 'email' not in session:
+        return redirect('/login')
+
+    email = session['email']
+
+    query = "SELECT * FROM items WHERE email=%s"
+    cursor.execute(query, (email,))
+    data = cursor.fetchall()
+
+    return render_template('my_items.html', items=data)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

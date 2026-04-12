@@ -51,19 +51,23 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            session['email'] = email   # ✅ FIXED
+            session['email'] = user[2]   # email
+            session['name'] = user[1]    # ✅ name store
             return redirect(url_for('dashboard'))
         else:
             return "Invalid email or password."
 
     return render_template('login.html')
 
-
 # Dashboard
 @app.route('/dashboard')
 def dashboard():
     if 'email' in session:
-        return render_template('dashboard.html')
+        return render_template(
+            'dashboard.html',
+            name=session['name'],
+            email=session['email']
+        )
     else:
         return redirect(url_for('login'))
 

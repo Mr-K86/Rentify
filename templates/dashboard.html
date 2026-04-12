@@ -14,32 +14,36 @@
 <body>
 
     <!-- Welcome -->
-    <h1 class="welcome">Welcome {{ email }}</h1>
+    <h1 class="welcome">Welcome <br> {{ name }}</h1>
+<p style="text-align:center; color:gray;">{{ email }}</p>
 
     <!-- Cards -->
-    <div class="container">
+   <div class="container">
 
-        <div class="card" onclick="location.href='/rentals'">
-            📦 My Rentals
-        </div>
+    <div class="card" onclick="location.href='/rentals'">
+        📦 My Rentals
+    </div>
 
-        <div class="card" onclick="location.href='/items'">
-            🛒 Available Items
-        </div>
+    <div class="card" onclick="location.href='/items'">
+        🛒 Available Items
+    </div>
 
-        <div class="card" onclick="location.href='/profile'">
-            👤 My Profile
-        </div>
+    <div class="card" onclick="location.href='/profile'">
+        👤 My Profile
+    </div>
 
-        <div class="card" onclick="location.href='/logout'">
-            🚪 Logout
-        </div>
-
+    <div class="card" onclick="location.href='/logout'">
+        🚪 Logout
     </div>
 
     <div class="card" onclick="location.href='/add_item'">
-    ➕ Add Item
+        ➕ Add Item
+    </div>
+
 </div>
 
+    </div>
+
+   
 </body>
 </html>

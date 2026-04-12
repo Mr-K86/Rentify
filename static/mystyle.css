@@ -4,33 +4,24 @@
 body {
     margin: 0;
     font-family: 'Poppins', Arial, sans-serif;
-    background: linear-gradient(135deg, #eef2f3, #dfe9f3); /* same background for all pages */
+    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
 }
 /* =========================
    GLOBAL STYLES (END)
 ========================= */
 
-/* =========================
-   NAVBAR  DESIGN (START)
-========================= */
 
+/* =========================
+   NAVBAR (START)
+========================= */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    /* Gradient background */
     background: linear-gradient(135deg, #2c3e50, #1a252f);
-
     padding: 15px 40px;
-
-    /* Bottom border */
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-
-    /* Shadow for depth */
     box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-
-    /* Sticky navbar */
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -42,19 +33,16 @@ body {
     font-size: 26px;
     font-weight: bold;
     letter-spacing: 1px;
-
-    /* Glow effect */
     text-shadow: 0 0 10px rgba(26, 188, 156, 0.7);
 }
 
-/* Nav links container */
+/* Nav Links */
 .nav-links {
     list-style: none;
     display: flex;
     gap: 25px;
 }
 
-/* Links */
 .nav-links li a {
     text-decoration: none;
     color: #ecf0f1;
@@ -63,17 +51,17 @@ body {
     padding: 6px 10px;
     border-radius: 6px;
     position: relative;
-    transition: all 0.3s ease;
+    transition: 0.3s ease;
 }
 
-/* Hover: background + scale */
+/* Hover */
 .nav-links li a:hover {
     color: #ffffff;
     background: rgba(26, 188, 156, 0.2);
     transform: scale(1.05);
 }
 
-/* Underline animation */
+/* Underline */
 .nav-links li a::after {
     content: "";
     position: absolute;
@@ -89,15 +77,20 @@ body {
     width: 100%;
 }
 
-/* Active link */
+/* Active */
 .nav-links li a.active {
     background: #1abc9c;
     color: white;
 }
+/* =========================
+   NAVBAR (END)
+========================= */
 
 /* =========================
-   NAVBAR PREMIUM DESIGN (END)
+   REMOVE DEFAULT LINK BORDER / OUTLINE
 ========================= */
+
+
 
 
 /* =========================
@@ -137,7 +130,7 @@ body {
 
 
 /* =========================
-   FORM (REGISTER / LOGIN / ADD ITEM) (START)
+   FORM PAGES (REGISTER / LOGIN / ADD ITEM) (START)
 ========================= */
 .form-container,
 form {
@@ -158,7 +151,6 @@ h2 {
 label {
     display: block;
     margin-top: 10px;
-    text-align: left;
 }
 
 input {
@@ -189,7 +181,7 @@ button:hover {
     background: #16a085;
 }
 /* =========================
-   FORM (END)
+   FORM PAGES (END)
 ========================= */
 
 
@@ -270,25 +262,28 @@ button:hover {
 ========================= */
 
 
+/* =========================
+   CONTACT PAGE (START)
+========================= */
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.contact-card {
+    background: white;
+    padding: 30px;
+    width: 350px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 1px solid #ddd;
+}
+/* =========================
+   CONTACT PAGE (END)
+========================= */
 
 
 /* =========================

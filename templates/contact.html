@@ -1,37 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>contact</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
-    </head>
-<body>
-<nav class ="navbar">
-<div class ="logo">Rentify</div>
+<head>
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+</head>
 
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Rentify</div>
 <ul class ="nav-links">
     <li><a href="/">Home</a></li>
     <li><a href="/items">Items</a></li>
     <li><a href="/register">Register</a></li>
     <li> <a href="/login">Login</a></li>
     <li> <a href="/contact">Contact</a> </li>
-    
 
 </ul>
 
 </nav>
 
+<!-- CONTACT SECTION -->
+<div class="contact-container">
 
+    <div class="contact-card">
+        <h2>📞 Contact Us</h2>
 
-<div class="contact">
-    
-    <p>Email: supportrentify@gmail.com</p>
+        <p>We’d love to hear from you!</p>
+
+        <div class="contact-info">
+            <p>📧 <strong>Email:</strong> supportrentify@gmail.com</p>
+            <p>📱 <strong>Phone:</strong> +91 9876543210</p>
+            <p>📍 <strong>Location:</strong> India</p>
+        </div>
+
+        <a href="mailto:supportrentify@gmail.com" class="contact-btn">
+            Send Email
+        </a>
+    </div>
+
 </div>
 
-
-
+<!-- FOOTER -->
 <footer>
 <p>© 2026 Rentify. All Rights Reserved.</p>
- </footer>
+</footer>
 
 </body>
 </html>

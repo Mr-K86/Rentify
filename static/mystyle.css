@@ -1,14 +1,25 @@
+/* =========================
+   GLOBAL STYLES (START)
+========================= */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2f3, #dfe9f3); /* same background for all pages */
 }
+/* =========================
+   GLOBAL STYLES (END)
+========================= */
+
+
+/* =========================
+   NAVBAR (START)
+========================= */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #2c3e50;
-    padding:12px 30px;
+    padding: 12px 30px;
 }
 
 .logo {
@@ -21,85 +32,36 @@ body {
     list-style: none;
     display: flex;
     gap: 20px;
-
-}
-
-.nav-links li {
-    list-style: none;
-
 }
 
 .nav-links a {
     text-decoration: none;
     color: white;
     font-size: 16px;
-
 }
 
 .nav-links a:hover {
     color: #1abc9c;
 }
+/* =========================
+   NAVBAR (END)
+========================= */
 
-#heading {
-    text-align: center;
-    margin-top: 50px;
-    color: rgb(103, 84, 228);
-    font-size: 24px;
-}
 
-/* registration form styles */
-
-.form-container {
-    width: 300px;
-    margin: 80px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.form-container h2 {
-    margin-bottom: 20px;
-}
-
-.form-container label {
-    display: block;
-    text-align: left;
-    margin-top: 10px;
-}
-
-.form-container input  {
-    width: 300px;
-    padding: 8px;
-    margin-top: 5px;
-
-}
-
-.form-container button {
-    margin-top: 15px;
-    padding: 10px;
-    width: 100%;
-    background-color: #1abc9c;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-/* home page design */
-
+/* =========================
+   HOME PAGE (START)
+========================= */
 .hero {
-    padding: 10px 20px;
+    padding: 20px;
     background-color: #1abc9c;
     color: white;
-    text-decoration: none;
-    border-radius: 5px;
     text-align: center;
+    border-radius: 5px;
 }
 
-/*our achievements section */
 .stats {
     text-align: center;
-    padding: 50px 20px;
+    padding: 40px 20px;
     background: linear-gradient(135deg, #4facfe, #00f2fe);
     color: #fff;
     border-radius: 12px;
@@ -108,68 +70,87 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-.stats h2 {
-    font-size: 32px;
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-}
-
 .stats p {
-    font-size: 22px;
-    margin: 10px 0;
-    padding: 15px;
+    font-size: 20px;
+    padding: 12px;
     background: rgba(255, 255, 255, 0.15);
 }
 
-/*Hover effect for stats */
 .stats p:hover {
     transform: scale(1.05);
-    background: rgba(255 , 255, 255, 0.3);
+}
+/* =========================
+   HOME PAGE (END)
+========================= */
 
+
+/* =========================
+   FORM (REGISTER / LOGIN / ADD ITEM) (START)
+========================= */
+.form-container,
+form {
+    width: 320px;
+    margin: 80px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
 
-/*Responsive design */
-@media (max-width: 600px) {
-    .stats h2 {
-        font-size: 24px;
-    }
-
-    .stats p {
-        font-size: 18px;
-    }
-}
-
-/* footer styles */
-footer {
-    background-color: #2c3e50;
-    color: white;
+h2 {
     text-align: center;
-    padding: 15px 0;
-    position: fixed;
-    bottom: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    text-align: left;
+}
+
+input {
     width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
-/* footer styles end */
-
-
-/* Body */
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+input:focus {
+    border-color: #1abc9c;
 }
 
-/* Welcome text */
+button {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    background: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #16a085;
+}
+/* =========================
+   FORM (END)
+========================= */
+
+
+/* =========================
+   DASHBOARD (START)
+========================= */
 .welcome {
     text-align: center;
     margin-top: 40px;
     font-size: 32px;
-    font-weight: 600;
     color: #2c3e50;
 }
 
-/* Container */
 .container {
     display: flex;
     justify-content: center;
@@ -178,7 +159,6 @@ body {
     margin-top: 40px;
 }
 
-/* Cards */
 .card {
     width: 220px;
     height: 120px;
@@ -188,33 +168,68 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 18px;
-    font-weight: 500;
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    transition: 0.3s ease;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-/* Hover effect */
 .card:hover {
     transform: translateY(-10px) scale(1.05);
     background: linear-gradient(135deg, #4ca1af, #2c3e50);
     color: white;
 }
+/* =========================
+   DASHBOARD (END)
+========================= */
 
-/* Add Item button (separate card) */
-.card:last-child {
-    display: block;
-    margin: 50px auto;
-    width: 250px;
-    height: 60px;
+
+/* =========================
+   ITEMS PAGE (START)
+========================= */
+.title {
     text-align: center;
-    line-height: 60px;
-    font-size: 18px;
-    background: #1abc9c;
+    font-size: 32px;
+    margin-top: 20px;
+}
+
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.item-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.item-card:hover {
+    transform: scale(1.05);
+    background: #4ca1af;
     color: white;
 }
+/* =========================
+   ITEMS PAGE (END)
+========================= */
 
-/* Add Item hover */
-.card:last-child:hover {
-    background: #16a085;
+
+/* =========================
+   FOOTER (START)
+========================= */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
+/* =========================
+   FOOTER (END)
+========================= */

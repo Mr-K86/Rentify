@@ -10,41 +10,93 @@ body {
    GLOBAL STYLES (END)
 ========================= */
 
-
 /* =========================
-   NAVBAR (START)
+   NAVBAR  DESIGN (START)
 ========================= */
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2c3e50;
-    padding: 12px 30px;
+
+    /* Gradient background */
+    background: linear-gradient(135deg, #2c3e50, #1a252f);
+
+    padding: 15px 40px;
+
+    /* Bottom border */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+
+    /* Shadow for depth */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+
+    /* Sticky navbar */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
+/* Logo */
 .logo {
-    color: white;
-    font-size: 22px;
+    color: #ffffff;
+    font-size: 26px;
     font-weight: bold;
+    letter-spacing: 1px;
+
+    /* Glow effect */
+    text-shadow: 0 0 10px rgba(26, 188, 156, 0.7);
 }
 
+/* Nav links container */
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 25px;
 }
 
-.nav-links a {
+/* Links */
+.nav-links li a {
     text-decoration: none;
-    color: white;
+    color: #ecf0f1;
     font-size: 16px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
-.nav-links a:hover {
-    color: #1abc9c;
+/* Hover: background + scale */
+.nav-links li a:hover {
+    color: #ffffff;
+    background: rgba(26, 188, 156, 0.2);
+    transform: scale(1.05);
 }
+
+/* Underline animation */
+.nav-links li a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background: #1abc9c;
+    transition: 0.3s;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* Active link */
+.nav-links li a.active {
+    background: #1abc9c;
+    color: white;
+}
+
 /* =========================
-   NAVBAR (END)
+   NAVBAR PREMIUM DESIGN (END)
 ========================= */
 
 
@@ -216,6 +268,27 @@ button:hover {
 /* =========================
    ITEMS PAGE (END)
 ========================= */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* =========================

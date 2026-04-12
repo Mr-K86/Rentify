@@ -13,11 +13,17 @@
     Item Name: <br>
     <input type="text" name="name" required><br><br>
 
-    Price (per month): <br>
+    Price (per day): <br>
     <input type="number" name="price" required><br><br>
 
     Contact Number: <br>
-    <input type="text" name="contact" required><br><br>
+<input type="text" name="contact"
+    pattern="[0-9]{10}"
+    maxlength="10"
+    placeholder="Enter 10 digit number"
+    required
+    oninvalid="this.setCustomValidity('Please enter exactly 10 digits')"
+    oninput="this.setCustomValidity('')">
 
     <button type="submit">Add Item</button>
 

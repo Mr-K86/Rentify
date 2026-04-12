@@ -114,13 +114,18 @@ def add_item():
         name = request.form['name']
         price = request.form['price']
         contact = request.form['contact']
+
+        # ✅ PHONE VALIDATION
+        if not contact.isdigit() or len(contact) != 10:
+            return "Phone number must be exactly 10 digits!"
+
         email = session['email']
 
         query = "INSERT INTO items (name, price, contact, email) VALUES (%s, %s, %s, %s)"
         cursor.execute(query, (name, price, contact, email))
         db.commit()
 
-        return redirect(url_for('my_items'))   # ✅ better UX
+        return redirect(url_for('my_items'))
 
     return render_template('add_item.html')
 

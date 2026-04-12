@@ -8,13 +8,16 @@
 
 <h2>Add Item</h2>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
     Item Name: <br>
     <input type="text" name="name" required><br><br>
 
     Price (per day): <br>
     <input type="number" name="price" required><br><br>
+
+    Image: <br>
+<input type="file" name="image" accept="image/*" required><br><br>
 
     Contact Number: <br>
 <input type="text" name="contact"

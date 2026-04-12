@@ -1,8 +1,12 @@
+import os
+from werkzeug.utils import secure_filename
 from flask import Flask, redirect, render_template, request, session, url_for
 import mysql.connector
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 # =========================
@@ -114,15 +118,24 @@ def add_item():
         name = request.form['name']
         price = request.form['price']
         contact = request.form['contact']
+        image = request.files['image']
 
-        # ✅ PHONE VALIDATION
+        # ✅ phone validation
         if not contact.isdigit() or len(contact) != 10:
             return "Phone number must be exactly 10 digits!"
 
+        # ✅ image save
+        if image:
+            filename = secure_filename(image.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            image.save(image_path)
+        else:
+            filename = None
+
         email = session['email']
 
-        query = "INSERT INTO items (name, price, contact, email) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (name, price, contact, email))
+        query = "INSERT INTO items (name, price, contact, email, image) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(query, (name, price, contact, email, filename))
         db.commit()
 
         return redirect(url_for('my_items'))

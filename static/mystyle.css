@@ -257,6 +257,20 @@ button:hover {
     background: #4ca1af;
     color: white;
 }
+
+/* =========================
+   ITEM IMAGE FIXED SIZE
+========================= */
+
+.item-img {
+    width: 100%;
+    height: 150px;        /* fixed height */
+    object-fit: cover;    /* auto crop (best) */
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+
 /* =========================
    ITEMS PAGE (END)
 ========================= */

@@ -52,8 +52,17 @@
         <!-- ================= RENT NOW BUTTON ================= -->
         <!-- Ye button email ke niche show hoga -->
         <!-- item[0] = item id (database se) -->
-        <a href="/rent/{{ item[0] }}" class="rent-btn">Rent Now</a>
 
+        
+        {% if item[6] %}
+    <!-- Already rented -->
+    <button class="rent-btn disabled">Already Rented</button>
+{% else %}
+    <!-- Available -->
+    <a href="/rent/{{ item[0] }}" class="rent-btn">Rent Now</a>
+
+
+{% endif %}
     </div>
     {% endfor %}
 

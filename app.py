@@ -146,10 +146,30 @@ def add_item():
 # =========================
 @app.route('/items')
 def show_items():
-    cursor.execute("SELECT * FROM items")
-    data = cursor.fetchall()
-    return render_template('items.html', items=data)
 
+    cursor1 = db.cursor(buffered=True)
+    cursor1.execute("SELECT * FROM items")
+    items = cursor1.fetchall()
+
+    updated_items = []
+
+    for item in items:
+        item_id = item[0]
+
+        cursor2 = db.cursor(buffered=True)
+        cursor2.execute(
+            "SELECT * FROM rentals WHERE item_id=%s AND status='Paid'",
+            (item_id,)
+        )
+        rented = cursor2.fetchone()
+
+        updated_items.append(item + (rented,))
+
+        cursor2.close()
+
+    cursor1.close()
+
+    return render_template('items.html', items=updated_items)
 
 # =========================
 # MY ITEMS

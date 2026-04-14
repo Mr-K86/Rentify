@@ -1,13 +1,19 @@
+# =========================
+# IMPORTS
+# =========================
 import os
 from werkzeug.utils import secure_filename
 from flask import Flask, redirect, render_template, request, session, url_for
 import mysql.connector
 
+# =========================
+# APP CONFIG
+# =========================
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 
 # =========================
 # DATABASE CONNECTION
@@ -20,9 +26,6 @@ db = mysql.connector.connect(
 )
 
 cursor = db.cursor()
-
-
-
 
 # =========================
 # HOME PAGE
@@ -65,8 +68,8 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            session['email'] = user[2]   # email
-            session['name'] = user[1]    # name
+            session['email'] = user[2]
+            session['name'] = user[1]
             return redirect(url_for('dashboard'))
         else:
             return "Invalid email or password."
@@ -82,11 +85,7 @@ def dashboard():
     if 'email' not in session:
         return redirect(url_for('login'))
 
-    return render_template(
-        'dashboard.html',
-        name=session['name'],
-        email=session['email']
-    )
+    return render_template('dashboard.html', name=session['name'], email=session['email'])
 
 
 # =========================
@@ -94,12 +93,12 @@ def dashboard():
 # =========================
 @app.route('/logout')
 def logout():
-    session.clear()   # ✅ full session clear
+    session.clear()
     return redirect(url_for('login'))
 
 
 # =========================
-# CONTACT
+# CONTACT PAGE
 # =========================
 @app.route('/contact')
 def contact():
@@ -120,15 +119,14 @@ def add_item():
         contact = request.form['contact']
         image = request.files['image']
 
-        # ✅ phone validation
+        # Phone validation
         if not contact.isdigit() or len(contact) != 10:
             return "Phone number must be exactly 10 digits!"
 
-        # ✅ image save
+        # Image upload
         if image:
             filename = secure_filename(image.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            image.save(image_path)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         else:
             filename = None
 
@@ -150,12 +148,11 @@ def add_item():
 def show_items():
     cursor.execute("SELECT * FROM items")
     data = cursor.fetchall()
-
     return render_template('items.html', items=data)
 
 
 # =========================
-# MY ITEMS (USER ONLY)
+# MY ITEMS
 # =========================
 @app.route('/my_items')
 def my_items():
@@ -169,6 +166,74 @@ def my_items():
     data = cursor.fetchall()
 
     return render_template('my_items.html', items=data)
+
+
+# =========================
+# RENT (AGREEMENT)
+# =========================
+@app.route('/rent/<int:item_id>', methods=['GET', 'POST'])
+def rent(item_id):
+
+    if request.method == 'POST':
+        name = request.form['name']
+        adhar = request.form['adhar']
+        mobile = request.form['mobile']
+        email = request.form['email']
+
+        query = """
+        INSERT INTO rentals (item_id, name, adhar, mobile, email)
+        VALUES (%s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, (item_id, name, adhar, mobile, email))
+        db.commit()
+
+        # Save rental id
+        rental_id = cursor.lastrowid
+        session['rental_id'] = rental_id
+
+        return redirect('/payment')
+
+    return render_template('rent.html', item_id=item_id)
+
+
+# =========================
+# PAYMENT PAGE
+# =========================
+@app.route('/payment')
+def payment():
+    return render_template('payment.html')
+
+
+# =========================
+# CONFIRM PAYMENT
+# =========================
+@app.route('/confirm_payment', methods=['POST'])
+def confirm_payment():
+
+    # DEBUG: print form data
+    print("Form Data:", request.form)
+
+    method = request.form.get('method')
+
+    if not method:
+        return "❌ Error: Payment method missing!"
+
+    rental_id = session.get('rental_id')
+
+    if not rental_id:
+        return "❌ Session expired!"
+
+    query = """
+    UPDATE rentals
+    SET payment_method=%s,
+        status='Paid'
+    WHERE id=%s
+    """
+
+    cursor.execute(query, (method, rental_id))
+    db.commit()
+
+    return f"✅ Payment Successful using {method}"
 
 
 # =========================

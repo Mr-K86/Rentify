@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rental Agreement</title>
+
+    <!-- CSS file connect -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+</head>
+
+<body>
+
+<!-- ================= CONTAINER ================= -->
+<div class="rent-box">
+
+    <!-- Heading -->
+    <h2>Rental Agreement</h2>
+
+    <!-- Agreement text -->
+    <p class="agreement-text">
+        I agree to rent this item under terms and conditions.
+        The renter is responsible for any damage and must return the item on time.
+    </p>
+
+    <!-- ================= FORM ================= -->
+    <form method="POST">
+
+        <!-- Full Name -->
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Enter your name" required>
+
+        <!-- Aadhaar -->
+        <!-- IMPORTANT: name="adhar" (Flask se match hona chahiye) -->
+        <label>Aadhaar Number</label>
+        <input type="text" name="adhar" placeholder="12-digit Aadhaar"
+               pattern="[0-9]{12}" title="Enter 12 digit Aadhaar" required>
+
+        <!-- Mobile -->
+        <label>Mobile Number</label>
+        <input type="text" name="mobile" placeholder="10-digit mobile"
+               pattern="[0-9]{10}" title="Enter 10 digit mobile number" required>
+
+        <!-- Email -->
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Enter your email" required>
+
+        <!-- Terms -->
+        <div class="checkbox">
+            <input type="checkbox" required>
+            <span>I Agree to Terms & Conditions</span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="rent-submit-btn">
+            Proceed to Payment
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

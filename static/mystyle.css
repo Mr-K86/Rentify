@@ -400,6 +400,140 @@ button:hover {
 }
 
 
+
+
+
+/* ================= RENT BUTTON ================= */
+.rent-btn {
+    display: inline-block;   /* button ko block jaisa banata hai */
+    margin-top: 10px;        /* email se gap */
+    padding: 10px 20px;      /* button size */
+    background-color: #1abc9c; /* button color */
+    color: white;            /* text color */
+    text-decoration: none;   /* underline remove */
+    border-radius: 6px;      /* rounded corners */
+    font-weight: bold;       /* bold text */
+    transition: 0.3s;        /* smooth hover effect */
+}
+
+/* Hover effect */
+.rent-btn:hover {
+    background-color: #16a085; /* darker color */
+    transform: scale(1.05);    /* thoda zoom effect */
+}  
+
+
+/* ================= PAYMENT PAGE start ================= */
+
+/* Full page background */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+}
+
+/* Payment box container */
+.payment-box {
+    background: white;
+    width: 350px;
+    margin: 100px auto;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* Heading */
+.payment-box h2 {
+    margin-bottom: 20px;
+}
+
+/* Payment buttons */
+.pay-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    background-color: #1abc9c;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+.pay-btn:hover {
+    background-color: #16a085;
+    transform: scale(1.03);
+}
+
+
+
+/* ================= RENT PAGE ================= */
+
+.rent-box {
+    width: 400px;
+    margin: 50px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    font-family: Arial, sans-serif;
+}
+
+.rent-box h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.agreement-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.rent-box label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.rent-box input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.checkbox {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rent-submit-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.rent-submit-btn:hover {
+    background-color: #16a085;
+}
+
+
+
+
+
 /* =========================
    FOOTER (START)
 ========================= */

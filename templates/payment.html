@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment</title>
+</head>
+
+<body>
+
+<h2>Payment</h2>
+<p>Select Payment Method</p>
+
+<!-- ✅ form ko id do -->
+<form method="POST" action="/confirm_payment" id="paymentForm">
+
+    <!-- hidden input -->
+    <input type="hidden" name="method" id="methodInput">
+
+    <!-- buttons -->
+    <button type="button" onclick="submitForm('UPI')">UPI</button>
+    <button type="button" onclick="submitForm('Card')">Card</button>
+    <button type="button" onclick="submitForm('Cash')">Cash</button>
+
+</form>
+
+<script>
+function submitForm(value) {
+    // hidden input me value set karo
+    document.getElementById("methodInput").value = value;
+
+    // ✅ correct form submit karo (important fix)
+    document.getElementById("paymentForm").submit();
+}
+</script>
+
+</body>
+</html>

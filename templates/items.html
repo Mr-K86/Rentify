@@ -2,16 +2,19 @@
 <html>
 <head>
     <title>Items</title>
+
+    <!-- CSS file connect -->
     <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar">
     <div class="logo">Rentify</div>
 
     <ul class="nav-links">
+        <!-- Navigation links -->
         <li><a href="/">Home</a></li>
         <li><a href="/items">Items</a></li>
         <li><a href="/register">Register</a></li>
@@ -20,32 +23,45 @@
     </ul>
 </nav>
 
-<!-- TITLE -->
+<!-- ================= PAGE TITLE ================= -->
 <h1 class="title">Available Items</h1>
 
-<!-- ITEMS -->
+<!-- ================= ITEMS CONTAINER ================= -->
 <div class="items-container">
 
+    <!-- Loop: database se items aa rahe hain -->
     {% for item in items %}
     <div class="item-card">
 
-        <!-- IMAGE -->
+        <!-- Item Image -->
+        <!-- Agar image hai to show karega, warna default image -->
         <img src="{{ url_for('static', filename='uploads/' + item[5]) if item[5] else url_for('static', filename='uploads/default.png') }}" class="item-img">
 
-        <!-- DETAILS -->
+        <!-- Item Name -->
         <h3>{{ item[1] }}</h3>
+
+        <!-- Item Price -->
         <p>₹{{ item[2] }} / day</p>
+
+        <!-- Contact Number -->
         <p>📞 {{ item[3] }}</p>
+
+        <!-- Email -->
         <p>📧 {{ item[4] }}</p>
+
+        <!-- ================= RENT NOW BUTTON ================= -->
+        <!-- Ye button email ke niche show hoga -->
+        <!-- item[0] = item id (database se) -->
+        <a href="/rent/{{ item[0] }}" class="rent-btn">Rent Now</a>
 
     </div>
     {% endfor %}
 
 </div>
 
-<!-- FOOTER -->
+<!-- ================= FOOTER ================= -->
 <footer>
-<p>© 2026 Rentify. All Rights Reserved.</p>
+    <p>© 2026 Rentify. All Rights Reserved.</p>
 </footer>
 
 </body>

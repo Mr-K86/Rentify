@@ -96,33 +96,106 @@ body {
 /* =========================
    HOME PAGE (START)
 ========================= */
-.hero {
-    padding: 20px;
-    background-color: #1abc9c;
+/* General */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50;
+    padding: 12px 30px;
+}
+
+.logo {
     color: white;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+}
+
+.nav-links a:hover {
+    color: #1abc9c;
+}
+
+/* Hero */
+.hero {
     text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    color: white;
+}
+
+.hero h1 {
+    font-size: 45px;
+}
+
+.hero p {
+    font-size: 18px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #2c3e50;
+    color: white;
+    text-decoration: none;
     border-radius: 5px;
 }
 
+/* Stats */
 .stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.stat-box {
+    background: #f4f4f4;
+    padding: 25px;
+    border-radius: 10px;
     text-align: center;
-    padding: 40px 20px;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    color: #fff;
-    border-radius: 12px;
-    margin: 40px auto;
-    max-width: 900px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.stats p {
-    font-size: 20px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.15);
+/* Features */
+.features {
+    text-align: center;
+    padding: 50px 20px;
 }
 
-.stats p:hover {
-    transform: scale(1.05);
+.feature-box {
+    display: inline-block;
+    width: 250px;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #ecf0f1;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
 }
 /* =========================
    HOME PAGE (END)

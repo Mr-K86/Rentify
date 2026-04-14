@@ -1,40 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Home</title>
+<head>
+    <title>Rentify</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
-    </head>
+</head>
+
 <body>
-<nav class ="navbar">
-<div class ="logo">Rentify</div>
 
-<ul class ="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/items">Items</a></li>
-    <li><a href="/register">Register</a></li>
-    <li> <a href="/login">Login</a></li>
-    <li> <a href="/contact">Contact</a> </li>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">Rentify</div>
 
-</ul>
-
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/items">Items</a></li>
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
 </nav>
 
-<div class ="hero">
-    <h1>Welcome to Rentify</h1>
-    <p>Your one-stop shop for all rental needs!</p>
+<!-- Hero Section -->
+<div class="hero">
+    <h1>Rent Smart, Live Better</h1>
+    <p>Your one-stop platform for renting anything you need</p>
+    <a href="/items" class="btn">Explore Now</a>
 </div>
 
+<!-- Stats Section -->
 <div class="stats">
-    <h2>Our Achievements</h2>
-    <p>1000+ Users</p>
-    <p>500+ Items Available</p>
+    <div class="stat-box">
+        <h2>1000+</h2>
+        <p>Users</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>500+</h2>
+        <p>Items Available</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>24/7</h2>
+        <p>Support</p>
+    </div>
 </div>
 
+<!-- Features Section -->
+<div class="features">
+    <h2>Why Choose Rentify?</h2>
 
+    <div class="feature-box">
+        <h3>Easy Renting</h3>
+        <p>Find and rent items in seconds</p>
+    </div>
 
+    <div class="feature-box">
+        <h3>Affordable</h3>
+        <p>Best prices guaranteed</p>
+    </div>
+
+    <div class="feature-box">
+        <h3>Trusted</h3>
+        <p>Verified users and safe platform</p>
+    </div>
+</div>
+
+<!-- Footer -->
 <footer>
-<p>© 2026 Rentify. All Rights Reserved.</p>
- </footer>
+    <p>© 2026 Rentify. All Rights Reserved.</p>
+</footer>
 
 </body>
 </html>

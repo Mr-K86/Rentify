@@ -532,6 +532,36 @@ body {
 
 
 
+/* ================= MY RENTALS ================= */
+
+.title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.item-card {
+    background: white;
+    padding: 20px;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.status {
+    color: green;
+    font-weight: bold;
+}
+
+
+
 
 
 /* =========================

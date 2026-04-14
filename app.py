@@ -175,21 +175,26 @@ def my_items():
 def rent(item_id):
 
     if request.method == 'POST':
-        name = request.form['name']
-        adhar = request.form['adhar']
-        mobile = request.form['mobile']
-        email = request.form['email']
+
+        name = request.form.get('name')
+        adhar = request.form.get('adhar')
+        mobile = request.form.get('mobile')
+
+        # ✅ correct email (session se)
+        email = session['email']
+
+        print("Form Data:", request.form)
+        print("Session Email:", email)
 
         query = """
         INSERT INTO rentals (item_id, name, adhar, mobile, email)
         VALUES (%s, %s, %s, %s, %s)
         """
+
         cursor.execute(query, (item_id, name, adhar, mobile, email))
         db.commit()
 
-        # Save rental id
-        rental_id = cursor.lastrowid
-        session['rental_id'] = rental_id
+        session['rental_id'] = cursor.lastrowid
 
         return redirect('/payment')
 
@@ -235,6 +240,37 @@ def confirm_payment():
 
     return f"✅ Payment Successful using {method}"
 
+
+# =========================
+# MY RENTALS (USER HISTORY)
+# =========================
+@app.route('/my_rentals')
+def my_rentals():
+
+    if 'email' not in session:
+        return redirect(url_for('login'))
+
+    email = session['email']
+
+    query = """
+    SELECT 
+        items.name,
+        items.price,
+        items.image,
+        rentals.name,
+        rentals.mobile,
+        rentals.adhar,
+        rentals.payment_method,
+        rentals.status
+    FROM rentals
+    JOIN items ON rentals.item_id = items.id
+    WHERE rentals.email = %s
+    """
+
+    cursor.execute(query, (email,))
+    data = cursor.fetchall()
+
+    return render_template('my_rentals.html', rentals=data)
 
 # =========================
 # RUN APP

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Rentals</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+</head>
+
+<body>
+
+
+
+<!-- ================= TITLE ================= -->
+<h1 class="title">My Rentals</h1>
+
+<!-- ================= CARDS ================= -->
+<div class="items-container">
+
+  {% for r in rentals %}
+<div class="item-card">
+
+    <!-- IMAGE -->
+    <img src="/static/uploads/{{ r[2] }}" class="item-img">
+
+    <!-- ITEM -->
+    <h3>{{ r[0] }}</h3>
+    <p>₹{{ r[1] }} / day</p>
+
+    <!-- USER -->
+    <p>👤 {{ r[3] }}</p>
+    <p>📞 {{ r[4] }}</p>
+    <p>🆔 XXXX-XXXX-{{ r[5][-4:] }}</p>
+
+    <!-- PAYMENT -->
+    <p>💳 {{ r[6] }}</p>
+
+    <!-- STATUS -->
+    <p class="status">{{ r[7] }}</p>
+
+</div>
+{% endfor %}
+
+</div>
+
+</body>
+</html>

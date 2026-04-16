@@ -15,7 +15,8 @@ import mysql.connector
 # APP CONFIG
 # =========================
 app = Flask(__name__)
-#k2
+
+razorpay_client = razorpay.Client(auth=("rzp_live_SeE0JX90xaFfzU", "LNhtRuwLhWj038uA0EfLplqO")) 
 app.secret_key = 'your_secret_key'
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -199,14 +200,14 @@ def create_order(amount):
 @app.route('/verify_payment', methods=['POST'])
 def verify_payment():
 
-    data = request.form
+    data = request.get_json()
 
     order_id = data['razorpay_order_id']
     payment_id = data['razorpay_payment_id']
     signature = data['razorpay_signature']
 
     generated_signature = hmac.new(
-        bytes("YOUR_KEY_SECRET", 'utf-8'),
+        bytes("LNhtRuwLhWj038uA0EfLplqO", 'utf-8'),
         bytes(order_id + "|" + payment_id, 'utf-8'),
         hashlib.sha256
     ).hexdigest()
@@ -215,21 +216,23 @@ def verify_payment():
 
         rental_id = session.get('rental_id')
 
-        query = """
-        UPDATE rentals
-        SET payment_method='Online',
-            status='Paid'
-        WHERE id=%s
-        """
+        if not rental_id:
+            return jsonify({"status": "failed", "message": "Session expired"})
 
-        cursor.execute(query, (rental_id,))
+        cursor.execute("""
+            UPDATE rentals
+            SET payment_method='Online',
+                status='completed',
+                payment_id=%s
+            WHERE id=%s
+        """, (payment_id, rental_id))
+
         db.commit()
 
-        return "✅ Payment Successful"
+        return jsonify({"status": "success"})
 
     else:
-        return "❌ Payment Failed"
-
+        return jsonify({"status": "failed"})
 # =========================
 # MY ITEMS
 # =========================
@@ -288,11 +291,7 @@ def payment():
     return render_template('payment.html')
 
 
-# =========================
-# CONFIRM PAYMENT
-# =========================
-@app.route('/confirm_payment', methods=['POST'])
-def confirm_payment():
+
 
     # DEBUG: print form data
     print("Form Data:", request.form)

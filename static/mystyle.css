@@ -41,8 +41,39 @@ body {
     transition: 0.3s;
 }
 
+/* =========================
+   NAV LINKS HOVER EFFECT
+========================= */
+
+.nav-links a {
+    position: relative;                 /* underline animation ke liye */
+    text-decoration: none;
+    color: #4bb69d;
+    font-weight: 500;
+    transition: all 0.3s ease;          /* smooth animation */
+}
+
+/* Hover effect */
 .nav-links a:hover {
-    color: #1abc9c;
+    color: #00bcd4;                    /* modern cyan highlight */
+    text-shadow: 0 0 8px rgba(0,188,212,0.6); /* glow effect */
+}
+
+/* Animated underline */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0%;
+    height: 2px;
+    background: #00bcd4;
+    transition: width 0.3s ease;
+}
+
+/* On hover underline expand */
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 /* =========================
@@ -52,7 +83,7 @@ body {
     text-align: center;
     padding: 80px 20px;
     color: white;
-    background: linear-gradient(to right, #4facfe, #00f2fe);
+    background: linear-gradient(to right, #6d7c8a, #61b1b5);
 }
 
 .hero h1 {
@@ -60,14 +91,171 @@ body {
 }
 
 .btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 25px;
-    background-color: #2c3e50;
+  margin-top: 20px;
+    padding: 10px 20px;
+    background: #1abc9c;
     color: white;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-weight: bold;
+    display: inline-block;
+    transition: 0.3s;
 }
+
+/* =========================
+   NAV CONTAINER
+========================= */
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Links wrapper */
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+/* =========================
+   INDIVIDUAL BOX LINKS
+========================= */
+
+.nav-links a {
+    text-decoration: none;
+    background: #1abc9c;        /* navbar theme */
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Hover effect (different color) */
+.nav-links a:hover {
+    background: #16a085;        /* darker shade */
+    transform: translateY(-3px);
+}
+
+/* Click effect */
+.nav-links a:active {
+    transform: scale(0.95);
+}
+
+/* =========================
+   STATS SECTION (START)
+========================= */
+
+.stats {
+    display: flex;                /* Horizontal layout */
+    justify-content: space-around; /* Equal spacing */
+    align-items: center;
+    padding: 40px 20px;
+    background: #f5f7fa;          /* Light background */
+    flex-wrap: wrap;              /* Responsive ke liye */
+}
+
+.stat-box {
+    background: #ffffff;
+    padding: 25px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    border-radius: 12px;          /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Soft shadow */
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect */
+.stat-box:hover {
+    transform: translateY(-8px);
+}
+
+.stat-box h2 {
+    font-size: 32px;
+    color: #007bff;               /* Highlight color */
+    margin-bottom: 10px;
+}
+
+.stat-box p {
+    font-size: 16px;
+    color: #555;
+}
+
+
+/* =========================
+   FEATURES SECTION (START)
+========================= */
+
+.features {
+    text-align: center;
+    padding: 50px 20px;
+    background: #ffffff;
+}
+
+.features h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Feature boxes container */
+.features .feature-box {
+    display: inline-block;        /* Side by side */
+    width: 250px;
+    margin: 15px;
+    padding: 20px;
+    background: #f0f4ff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.feature-box:hover {
+    background: #007bff;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Heading inside feature */
+.feature-box h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Text inside feature */
+.feature-box p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Change text color on hover */
+.feature-box:hover p {
+    color: #fff;
+}
+
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 768px) {
+
+    .stats {
+        flex-direction: column;   /* Stack vertically */
+    }
+
+    .features .feature-box {
+        width: 80%;               /* Full width on mobile */
+    }
+}
+
+
+
+
 
 /* =========================
    ITEMS PAGE (FIXED)
@@ -208,6 +396,18 @@ button {
     border-radius: 12px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.contact-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #1abc9c;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    display: inline-block;
+    transition: 0.3s;
 }
 
 /* =========================

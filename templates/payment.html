@@ -1,36 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Payment</title>
+    <meta charset="UTF-8">
+    <title>Payment - Rentify</title>
+
+    <!-- Razorpay Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- External JS -->
+    <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #16a085;
+        }
+    </style>
 </head>
 
 <body>
 
-<h2>Payment</h2>
-<p>Select Payment Method</p>
+    <h2>Complete Payment</h2>
 
-<!-- ✅ form ko id do -->
-<form method="POST" action="/confirm_payment" id="paymentForm">
-
-    <!-- hidden input -->
-    <input type="hidden" name="method" id="methodInput">
-
-    <!-- buttons -->
-    <button type="button" onclick="submitForm('UPI')">UPI</button>
-    <button type="button" onclick="submitForm('Card')">Card</button>
-    <button type="button" onclick="submitForm('Cash')">Cash</button>
-
-</form>
-
-<script>
-function submitForm(value) {
-    // hidden input me value set karo
-    document.getElementById("methodInput").value = value;
-
-    // ✅ correct form submit karo (important fix)
-    document.getElementById("paymentForm").submit();
-}
-</script>
+    <button onclick="payNow()">Pay Now</button>
 
 </body>
 </html>

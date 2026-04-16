@@ -1,6 +1,11 @@
 # =========================
 # IMPORTS
 # =========================
+import razorpay
+import hmac
+import hashlib
+from flask import jsonify
+
 import os
 from werkzeug.utils import secure_filename
 from flask import Flask, redirect, render_template, request, session, url_for
@@ -10,6 +15,7 @@ import mysql.connector
 # APP CONFIG
 # =========================
 app = Flask(__name__)
+#k2
 app.secret_key = 'your_secret_key'
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -170,6 +176,59 @@ def show_items():
     cursor1.close()
 
     return render_template('items.html', items=updated_items)
+
+
+# =========================
+# CREATE ORDER (RAZORPAY)
+# =========================
+@app.route('/create_order/<int:amount>')
+def create_order(amount):
+
+    order = razorpay_client.order.create({
+        "amount": amount * 100,
+        "currency": "INR",
+        "payment_capture": 1
+    })
+
+    return jsonify(order)
+
+
+# =========================
+# VERIFY PAYMENT
+# =========================
+@app.route('/verify_payment', methods=['POST'])
+def verify_payment():
+
+    data = request.form
+
+    order_id = data['razorpay_order_id']
+    payment_id = data['razorpay_payment_id']
+    signature = data['razorpay_signature']
+
+    generated_signature = hmac.new(
+        bytes("YOUR_KEY_SECRET", 'utf-8'),
+        bytes(order_id + "|" + payment_id, 'utf-8'),
+        hashlib.sha256
+    ).hexdigest()
+
+    if generated_signature == signature:
+
+        rental_id = session.get('rental_id')
+
+        query = """
+        UPDATE rentals
+        SET payment_method='Online',
+            status='Paid'
+        WHERE id=%s
+        """
+
+        cursor.execute(query, (rental_id,))
+        db.commit()
+
+        return "✅ Payment Successful"
+
+    else:
+        return "❌ Payment Failed"
 
 # =========================
 # MY ITEMS

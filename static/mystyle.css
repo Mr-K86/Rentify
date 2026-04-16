@@ -379,6 +379,13 @@ button {
     transition: 0.3s;
 }
 
+.welcome {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 28px;
+    color: #333;
+}
+
 .card:hover {
     transform: translateY(-10px);
     background: #2c3e50;

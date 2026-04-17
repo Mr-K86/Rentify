@@ -6,11 +6,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/my_rentals.css') }}">
 
 </head>
 
 <body>
 
+ <!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">Rentify</div>
+
+    <div class="nav-container">
+        <ul class="nav-links">
+        <li><a href="/items">Available Items</a></li>
+        <li><a href="/add_item">Add Item</a></li>
+        <li><a href="/my_items">My Items</a></li>
+       <li><a href="/logout">Logout</a></li>
+       
+       
+
+    </ul>
+</nav>
 
 
 <!-- ================= TITLE ================= -->
@@ -44,6 +60,11 @@
 {% endfor %}
 
 </div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 Rentify. All Rights Reserved.</p>
+</footer>
 
 </body>
 </html>

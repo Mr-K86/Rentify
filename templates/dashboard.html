@@ -6,11 +6,10 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
@@ -18,18 +17,31 @@
 
 <body>
 
-    <!-- Welcome -->
-    <h1 class="welcome">Welcome <br> {{ name }}</h1>
-<p style="text-align:center; color:gray;">{{ email }}</p>
 
-    <!-- Cards -->
-   <div class="container">
 
-      <div class="container">
+    
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">Rentify</div>
 
-    <div class="card" onclick="location.href='/items'">
-        🏬 Available Items
-    </div>
+    <div class="nav-container">
+        <ul class="nav-links">
+        
+       
+        <li><a href="/items">Available Items</a></li>
+        <li><a href="/logout">Logout</a></li>
+
+    </ul>
+</nav>
+
+<!-- Welcome -->
+<h1 class="welcome">Welcome <br> {{ name }}</h1>
+<p class="email">{{ email }}</p>
+
+<!-- Cards -->
+<div class="container">
+
+   
 
     <div class="card" onclick="location.href='/my_items'">
         📦 My Items
@@ -40,29 +52,16 @@
     </div>
 
     <div class="card" onclick="location.href='/my_rentals'">
-    📜 My Rentals
-</div>
-
-    <div class="card" onclick="location.href='/logout'">
-        🚪 Logout
+        📜 My Rentals
     </div>
-
-</div>
-
-</div>
-    
-
-</div>
-
-    </div>
-
-    <script>
-window.history.forward();
-function noBack() {
-    window.history.forward();
-}
-</script>
 
    
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 Rentify. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>

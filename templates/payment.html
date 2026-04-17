@@ -22,9 +22,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='payment.css') }}">
 </head>
 <body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">Rentify</div>
+
+    <div class="nav-container">
+        <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+        <li><a href="/items">Available Items</a></li>
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/contact">Contact</a></li>
+
+    </ul>
+</nav>
+
     <div class="payment-container">
         <h2>Complete Payment</h2>
         <button onclick="payNow({{item_id}})">Pay Now</button>
     </div>
+    
+<!-- Footer -->
+<footer>
+    <p>© 2026 Rentify. All Rights Reserved.</p>
+</footer>
+
+
 </body>
 </html>

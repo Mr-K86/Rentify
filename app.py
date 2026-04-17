@@ -31,9 +31,8 @@ db = mysql.connector.connect(
     database="rentify2"
 )
 
-# ✅ FIX 1: Use a helper function instead of a single shared cursor.
-# A single global cursor causes "unread result" errors when multiple
-# routes run queries. Always create a fresh cursor per query.
+
+
 def get_cursor(buffered=False):
     return db.cursor(buffered=buffered)
 
@@ -174,8 +173,7 @@ def show_items():
         item_id = item[0]
 
         cur2 = get_cursor(buffered=True)
-        # ✅ FIX 2: Changed status='Paid' → status='completed'
-        # Your DB enum only has: pending, completed, failed — 'Paid' never matched!
+
         cur2.execute(
             "SELECT * FROM rentals WHERE item_id=%s AND status='completed'",
             (item_id,)
@@ -190,9 +188,7 @@ def show_items():
 
 # =========================
 # CREATE ORDER (RAZORPAY)
-# ✅ FIX 3: Accept item_id and look up the real price from DB
-# Before this was /create_order/<amount> and JS hardcoded /create_order/1
-# meaning every payment was always ₹1 regardless of item price!
+
 # =========================
 @app.route('/create_order/<int:item_id>')
 def create_order(item_id):
@@ -204,15 +200,17 @@ def create_order(item_id):
     if not row:
         return jsonify({"error": "Item not found"}), 404
 
-    price = row[0]  # price from DB in rupees
+    price = int(row[0])
+
+    if price is None:
+        return jsonify({"error": "Price missing"}), 400
 
     order = razorpay_client.order.create({
-        "amount": price * 100,   # convert to paise
+        "amount": int(price) * 100,
         "currency": "INR",
         "payment_capture": 1
     })
 
-    # ✅ Also store item_id in session so verify_payment knows which item
     session['paying_item_id'] = item_id
 
     return jsonify(order)
@@ -229,9 +227,7 @@ def verify_payment():
     payment_id = data['razorpay_payment_id']
     signature  = data['razorpay_signature']
 
-    # ✅ FIX 4: hmac.new → hmac.new is wrong Python syntax.
-    # Correct Python function is hmac.new() — but that's Python 2.
-    # In Python 3 the correct call is: hmac.new(key, msg, digestmod)
+  
     generated_signature = hmac.new(
         bytes("LNhtRuwLhWj038uA0EfLplqO", 'utf-8'),
         bytes(order_id + "|" + payment_id, 'utf-8'),
@@ -311,9 +307,7 @@ def rent(item_id):
 
 # =========================
 # PAYMENT PAGE
-# ✅ FIX 5: Pass item_id to template so JS can call /create_order/<item_id>
-# Before: dead code existed after the return — it never ran.
-# Before: JS always called /create_order/1 → always charged ₹1.
+
 # =========================
 @app.route('/payment')
 def payment():

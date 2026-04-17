@@ -10,34 +10,12 @@
     <!-- External JS -->
     <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
 
-    <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            margin-top: 100px;
-        }
-
-        button {
-            padding: 12px 25px;
-            background: #1abc9c;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #16a085;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='payment.css') }}">
 </head>
-
 <body>
-
-    <h2>Complete Payment</h2>
-
-    <button onclick="payNow({{item_id}})">Pay Now</button>
-
+    <div class="payment-container">
+        <h2>Complete Payment</h2>
+        <button onclick="payNow({{item_id}})">Pay Now</button>
+    </div>
 </body>
 </html>

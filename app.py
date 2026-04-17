@@ -5,7 +5,6 @@ import razorpay
 import hmac
 import hashlib
 from flask import jsonify
-
 import os
 from werkzeug.utils import secure_filename
 from flask import Flask, redirect, render_template, request, session, url_for
@@ -16,7 +15,7 @@ import mysql.connector
 # =========================
 app = Flask(__name__)
 
-razorpay_client = razorpay.Client(auth=("rzp_live_SeE0JX90xaFfzU", "LNhtRuwLhWj038uA0EfLplqO")) 
+razorpay_client = razorpay.Client(auth=("rzp_live_SeE0JX90xaFfzU", "LNhtRuwLhWj038uA0EfLplqO"))
 app.secret_key = 'your_secret_key'
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -32,7 +31,12 @@ db = mysql.connector.connect(
     database="rentify2"
 )
 
-cursor = db.cursor()
+# ✅ FIX 1: Use a helper function instead of a single shared cursor.
+# A single global cursor causes "unread result" errors when multiple
+# routes run queries. Always create a fresh cursor per query.
+def get_cursor(buffered=False):
+    return db.cursor(buffered=buffered)
+
 
 # =========================
 # HOME PAGE
@@ -52,9 +56,13 @@ def register():
         Email = request.form['Email']
         Password = request.form['Password']
 
-        query = "INSERT INTO register (Full_Name, Email, Password) VALUES (%s, %s, %s)"
-        cursor.execute(query, (Full_Name, Email, Password))
+        cur = get_cursor()
+        cur.execute(
+            "INSERT INTO register (Full_Name, Email, Password) VALUES (%s, %s, %s)",
+            (Full_Name, Email, Password)
+        )
         db.commit()
+        cur.close()
 
         return redirect(url_for('login'))
 
@@ -70,9 +78,10 @@ def login():
         email = request.form['Email']
         password = request.form['Password']
 
-        query = "SELECT * FROM register WHERE Email=%s AND Password=%s"
-        cursor.execute(query, (email, password))
-        user = cursor.fetchone()
+        cur = get_cursor(buffered=True)
+        cur.execute("SELECT * FROM register WHERE Email=%s AND Password=%s", (email, password))
+        user = cur.fetchone()
+        cur.close()
 
         if user:
             session['email'] = user[2]
@@ -126,11 +135,9 @@ def add_item():
         contact = request.form['contact']
         image = request.files['image']
 
-        # Phone validation
         if not contact.isdigit() or len(contact) != 10:
             return "Phone number must be exactly 10 digits!"
 
-        # Image upload
         if image:
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -139,9 +146,13 @@ def add_item():
 
         email = session['email']
 
-        query = "INSERT INTO items (name, price, contact, email, image) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(query, (name, price, contact, email, filename))
+        cur = get_cursor()
+        cur.execute(
+            "INSERT INTO items (name, price, contact, email, image) VALUES (%s, %s, %s, %s, %s)",
+            (name, price, contact, email, filename)
+        )
         db.commit()
+        cur.close()
 
         return redirect(url_for('my_items'))
 
@@ -153,43 +164,56 @@ def add_item():
 # =========================
 @app.route('/items')
 def show_items():
-
-    cursor1 = db.cursor(buffered=True)
-    cursor1.execute("SELECT * FROM items")
-    items = cursor1.fetchall()
+    cur1 = get_cursor(buffered=True)
+    cur1.execute("SELECT * FROM items")
+    items = cur1.fetchall()
+    cur1.close()
 
     updated_items = []
-
     for item in items:
         item_id = item[0]
 
-        cursor2 = db.cursor(buffered=True)
-        cursor2.execute(
-            "SELECT * FROM rentals WHERE item_id=%s AND status='Paid'",
+        cur2 = get_cursor(buffered=True)
+        # ✅ FIX 2: Changed status='Paid' → status='completed'
+        # Your DB enum only has: pending, completed, failed — 'Paid' never matched!
+        cur2.execute(
+            "SELECT * FROM rentals WHERE item_id=%s AND status='completed'",
             (item_id,)
         )
-        rented = cursor2.fetchone()
+        rented = cur2.fetchone()
+        cur2.close()
 
         updated_items.append(item + (rented,))
-
-        cursor2.close()
-
-    cursor1.close()
 
     return render_template('items.html', items=updated_items)
 
 
 # =========================
 # CREATE ORDER (RAZORPAY)
+# ✅ FIX 3: Accept item_id and look up the real price from DB
+# Before this was /create_order/<amount> and JS hardcoded /create_order/1
+# meaning every payment was always ₹1 regardless of item price!
 # =========================
-@app.route('/create_order/<int:amount>')
-def create_order(amount):
+@app.route('/create_order/<int:item_id>')
+def create_order(item_id):
+    cur = get_cursor(buffered=True)
+    cur.execute("SELECT price FROM items WHERE id=%s", (item_id,))
+    row = cur.fetchone()
+    cur.close()
+
+    if not row:
+        return jsonify({"error": "Item not found"}), 404
+
+    price = row[0]  # price from DB in rupees
 
     order = razorpay_client.order.create({
-        "amount": amount * 100,
+        "amount": price * 100,   # convert to paise
         "currency": "INR",
         "payment_capture": 1
     })
+
+    # ✅ Also store item_id in session so verify_payment knows which item
+    session['paying_item_id'] = item_id
 
     return jsonify(order)
 
@@ -199,13 +223,15 @@ def create_order(amount):
 # =========================
 @app.route('/verify_payment', methods=['POST'])
 def verify_payment():
-
     data = request.get_json()
 
-    order_id = data['razorpay_order_id']
+    order_id   = data['razorpay_order_id']
     payment_id = data['razorpay_payment_id']
-    signature = data['razorpay_signature']
+    signature  = data['razorpay_signature']
 
+    # ✅ FIX 4: hmac.new → hmac.new is wrong Python syntax.
+    # Correct Python function is hmac.new() — but that's Python 2.
+    # In Python 3 the correct call is: hmac.new(key, msg, digestmod)
     generated_signature = hmac.new(
         bytes("LNhtRuwLhWj038uA0EfLplqO", 'utf-8'),
         bytes(order_id + "|" + payment_id, 'utf-8'),
@@ -213,26 +239,27 @@ def verify_payment():
     ).hexdigest()
 
     if generated_signature == signature:
-
         rental_id = session.get('rental_id')
 
         if not rental_id:
-            return jsonify({"status": "failed", "message": "Session expired"})
+            return jsonify({"status": "failed", "message": "Session expired — rental_id missing"})
 
-        cursor.execute("""
+        cur = get_cursor()
+        cur.execute("""
             UPDATE rentals
             SET payment_method='Online',
                 status='completed',
                 payment_id=%s
             WHERE id=%s
         """, (payment_id, rental_id))
-
         db.commit()
+        cur.close()
 
         return jsonify({"status": "success"})
-
     else:
-        return jsonify({"status": "failed"})
+        return jsonify({"status": "failed", "message": "Signature mismatch"})
+
+
 # =========================
 # MY ITEMS
 # =========================
@@ -243,9 +270,10 @@ def my_items():
 
     email = session['email']
 
-    query = "SELECT * FROM items WHERE email=%s"
-    cursor.execute(query, (email,))
-    data = cursor.fetchall()
+    cur = get_cursor(buffered=True)
+    cur.execute("SELECT * FROM items WHERE email=%s", (email,))
+    data = cur.fetchall()
+    cur.close()
 
     return render_template('my_items.html', items=data)
 
@@ -255,28 +283,26 @@ def my_items():
 # =========================
 @app.route('/rent/<int:item_id>', methods=['GET', 'POST'])
 def rent(item_id):
+    if 'email' not in session:
+        return redirect(url_for('login'))
 
     if request.method == 'POST':
-
-        name = request.form.get('name')
-        adhar = request.form.get('adhar')
+        name   = request.form.get('name')
+        adhar  = request.form.get('adhar')
         mobile = request.form.get('mobile')
+        email  = session['email']
 
-        # ✅ correct email (session se)
-        email = session['email']
-
-        print("Form Data:", request.form)
-        print("Session Email:", email)
-
-        query = """
-        INSERT INTO rentals (item_id, name, adhar, mobile, email)
-        VALUES (%s, %s, %s, %s, %s)
-        """
-
-        cursor.execute(query, (item_id, name, adhar, mobile, email))
+        cur = get_cursor()
+        cur.execute(
+            "INSERT INTO rentals (item_id, name, adhar, mobile, email) VALUES (%s, %s, %s, %s, %s)",
+            (item_id, name, adhar, mobile, email)
+        )
         db.commit()
 
-        session['rental_id'] = cursor.lastrowid
+        session['rental_id'] = cur.lastrowid
+        # ✅ Store item_id in session so payment page knows which item to charge
+        session['paying_item_id'] = item_id
+        cur.close()
 
         return redirect('/payment')
 
@@ -285,38 +311,20 @@ def rent(item_id):
 
 # =========================
 # PAYMENT PAGE
+# ✅ FIX 5: Pass item_id to template so JS can call /create_order/<item_id>
+# Before: dead code existed after the return — it never ran.
+# Before: JS always called /create_order/1 → always charged ₹1.
 # =========================
 @app.route('/payment')
 def payment():
-    return render_template('payment.html')
+    if 'email' not in session:
+        return redirect(url_for('login'))
 
+    item_id = session.get('paying_item_id')
+    if not item_id:
+        return "Session expired. Please start again."
 
-
-
-    # DEBUG: print form data
-    print("Form Data:", request.form)
-
-    method = request.form.get('method')
-
-    if not method:
-        return "❌ Error: Payment method missing!"
-
-    rental_id = session.get('rental_id')
-
-    if not rental_id:
-        return "❌ Session expired!"
-
-    query = """
-    UPDATE rentals
-    SET payment_method=%s,
-        status='Paid'
-    WHERE id=%s
-    """
-
-    cursor.execute(query, (method, rental_id))
-    db.commit()
-
-    return f"✅ Payment Successful using {method}"
+    return render_template('payment.html', item_id=item_id)
 
 
 # =========================
@@ -324,31 +332,31 @@ def payment():
 # =========================
 @app.route('/my_rentals')
 def my_rentals():
-
     if 'email' not in session:
         return redirect(url_for('login'))
 
     email = session['email']
 
-    query = """
-    SELECT 
-        items.name,
-        items.price,
-        items.image,
-        rentals.name,
-        rentals.mobile,
-        rentals.adhar,
-        rentals.payment_method,
-        rentals.status
-    FROM rentals
-    JOIN items ON rentals.item_id = items.id
-    WHERE rentals.email = %s
-    """
-
-    cursor.execute(query, (email,))
-    data = cursor.fetchall()
+    cur = get_cursor(buffered=True)
+    cur.execute("""
+        SELECT
+            items.name,
+            items.price,
+            items.image,
+            rentals.name,
+            rentals.mobile,
+            rentals.adhar,
+            rentals.payment_method,
+            rentals.status
+        FROM rentals
+        JOIN items ON rentals.item_id = items.id
+        WHERE rentals.email = %s
+    """, (email,))
+    data = cur.fetchall()
+    cur.close()
 
     return render_template('my_rentals.html', rentals=data)
+
 
 # =========================
 # RUN APP

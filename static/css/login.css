@@ -1,0 +1,62 @@
+/* LOGIN PAGE */
+
+.login-box {
+    width: 350px;
+    margin: 80px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Heading */
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Labels */
+.login-box label {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+/* Inputs */
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+/* Input focus */
+.login-box input:focus {
+    border-color: #1abc9c;
+    outline: none;
+    box-shadow: 0 0 5px rgba(26,188,156,0.4);
+}
+
+/* Button */
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover */
+.login-box button:hover {
+    background: #16a085;
+    transform: scale(1.03);
+}

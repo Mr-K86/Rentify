@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    width: 220px;
+    height: 120px;
+    background: white;
+    border-radius: 12px;
+}
+
+.card:hover {
+    background: #2c3e50;
+    color: white;
+}
+
+.welcome {
+    text-align: center;
+}

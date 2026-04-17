@@ -1,0 +1,29 @@
+/* ADD ITEM PAGE */
+
+.add-item-box {
+    width: 320px;
+    margin: 60px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.add-item-box input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.add-item-box button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}

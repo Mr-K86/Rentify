@@ -1,0 +1,77 @@
+/* =========================
+   CONTACT PAGE
+========================= */
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+}
+
+/* Card */
+.contact-card {
+    width: 380px;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
+
+/* Hover effect */
+.contact-card:hover {
+    transform: translateY(-6px);
+}
+
+/* Heading */
+.contact-card h2 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+/* Subtitle */
+.contact-card p {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Info section */
+.contact-info {
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Info text */
+.contact-info p {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+/* Button */
+.contact-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 22px;
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Button hover */
+.contact-btn:hover {
+    background: linear-gradient(135deg, #16a085, #138d75);
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .contact-card {
+        width: 90%;
+        padding: 25px;
+    }
+}

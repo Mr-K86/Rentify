@@ -1,0 +1,80 @@
+/* =========================
+   REGISTER FORM
+========================= */
+
+.form-container {
+    width: 380px;
+    margin: 80px auto;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.form-container:hover {
+    transform: translateY(-5px);
+}
+
+/* Heading */
+.form-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Labels */
+.form-container label {
+    display: block;
+    text-align: left;
+    margin-top: 12px;
+    font-weight: 600;
+    color: #444;
+}
+
+/* Inputs */
+.form-container input {
+    width: 100%;
+    padding: 11px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+/* Input focus effect */
+.form-container input:focus {
+    border-color: #1abc9c;
+    outline: none;
+    box-shadow: 0 0 5px rgba(26,188,156,0.5);
+}
+
+/* Button */
+.form-container button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 12px;
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Button hover */
+.form-container button:hover {
+    background: linear-gradient(135deg, #16a085, #138d75);
+    transform: scale(1.03);
+}
+
+/* Small screen responsive */
+@media (max-width: 480px) {
+    .form-container {
+        width: 90%;
+        padding: 25px;
+    }
+}

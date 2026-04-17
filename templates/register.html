@@ -1,54 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
-    </head>
-<body>
-    <!--Navbar-->
-<nav class ="navbar">
-<div class ="logo">Rentify</div>
-<div class="nav-container">
-<ul class ="nav-links">
-<li><a href="/">Home</a></li>
-    <li><a href="/items">Items</a></li>
-    <li><a href="/register">Register</a></li>
-    <li> <a href="/login">Login</a></li>
-    <li> <a href="/contact">Contact</a> </li>
+<head>
+    <title>Register</title>
 
-</ul>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">Rentify</div>
+    <div class="nav-container">
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/items">Items</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
 </nav>
 
-
-<!-- Registration form -->
+<!-- Register Form -->
 <div class="form-container">
     <h2>Register</h2>
 
-    <!--IMPORTANT: action + method-->
-
     <form action="/register" method="POST">
-        <!--full name-->
         <label>Full Name</label>
-        <input type ="text" name="Full_Name" placeholder="Enter your full name" required> 
-        <br> <br>
- <!--email-->
+        <input type="text" name="Full_Name" placeholder="Enter your full name" required>
 
         <label>Email</label>
-        <input type ="email" name="Email" placeholder="Enter your email" required> 
-        <br> <br>
+        <input type="email" name="Email" placeholder="Enter your email" required>
 
         <label>Password</label>
-        <input type="password" name="Password" placeholder="Enter your password" required> <br>
+        <input type="password" name="Password" placeholder="Enter your password" required>
 
         <button type="submit">Register</button>
-
     </form>
 </div>
-<!--Footer-->
-<footer>
-<p>© 2026 Rentify. All Rights Reserved.</p>
- </footer>
 
+<!-- Footer -->
+<footer>
+    <p>© 2026 Rentify. All Rights Reserved.</p>
+</footer>
 
 </body>
 </html>

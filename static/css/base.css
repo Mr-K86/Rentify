@@ -1,0 +1,8 @@
+/* GLOBAL STYLES */
+body {
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+    overflow-y: auto;
+    padding-bottom: 80px;
+}

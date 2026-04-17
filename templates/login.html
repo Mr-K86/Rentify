@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>login</title>
-         <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
-    </head>
-<body>
-<nav class ="navbar">
-<div class ="logo">Rentify</div>
-<div class="nav-container">
-<ul class ="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/items">Items</a></li>
-    <li><a href="/register">Register</a></li>
-    <li> <a href="/login">Login</a></li>
-    <li> <a href="/contact">Contact</a> </li>
+<head>
+    <title>Login</title>
 
-</ul>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Rentify</div>
+    <div class="nav-container">
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/items">Items</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
 </nav>
-<!-- Registration form -->
-<div class="form-container">
+
+<!-- LOGIN FORM -->
+<div class="login-box">
     <h2>Login</h2>
 
-    <form action ="{{ url_for('login')}}" method="POST">
+    <form action="{{ url_for('login') }}" method="POST">
 
-        <!-- email-->
-        <label> Email</label>
-        <input type ="email" name="Email" placeholder="Enter your registerd email" required> 
-        <br> <br>
+        <label>Email</label>
+        <input type="email" name="Email" placeholder="Enter your email" required>
 
         <label>Password</label>
-        <input type="password" name="Password" placeholder="Enter your password" required> 
-        <br>
+        <input type="password" name="Password" placeholder="Enter your password" required>
 
         <button type="submit">Login</button>
 
-        </form>
-    </div>
+    </form>
+</div>
 
+<!-- FOOTER -->
 <footer>
-<p>© 2026 Rentify. All Rights Reserved.</p>
- </footer>
-
+    <p>© 2026 Rentify. All Rights Reserved.</p>
+</footer>
 
 </body>
 </html>

@@ -1,0 +1,61 @@
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    color: white;
+    background: linear-gradient(to right, #6d7c8a, #61b1b5);
+}
+
+.hero h1 {
+    font-size: 40px;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #1abc9c;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 40px 20px;
+    background: #f5f7fa;
+}
+
+.stat-box {
+    background: #fff;
+    padding: 25px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.stat-box:hover {
+    transform: translateY(-8px);
+}
+
+.features {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.feature-box {
+    display: inline-block;
+    width: 250px;
+    margin: 15px;
+    padding: 20px;
+    background: #f0f4ff;
+    border-radius: 12px;
+}
+
+.feature-box:hover {
+    background: #007bff;
+    color: white;
+}

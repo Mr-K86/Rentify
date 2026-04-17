@@ -1,42 +1,51 @@
-body {
-    font-family: 'Poppins', Arial, sans-serif;
-    background: linear-gradient(135deg, #74ebd5, #9face6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+/* =========================
+   PAYMENT PAGE
+========================= */
 
-/* Container box */
+/* Container */
 .payment-container {
+    width: 350px;
+    margin: 100px auto;
+    padding: 30px;
     background: white;
-    padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
 /* Heading */
 .payment-container h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: #2c3e50;
 }
 
 /* Button */
-button {
-    padding: 12px 30px;
-    background: linear-gradient(45deg, #1abc9c, #16a085);
+.payment-container button {
+    width: 100%;
+    padding: 14px;
+    background: #1abc9c;
     color: white;
     border: none;
-    border-radius: 30px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 18px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
-/* Hover effect */
-button:hover {
+/* Hover */
+.payment-container button:hover {
+    background: #16a085;
     transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Active click */
+.payment-container button:active {
+    transform: scale(0.95);
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .payment-container {
+        width: 90%;
+    }
 }

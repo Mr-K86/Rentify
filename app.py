@@ -42,7 +42,12 @@ def get_cursor(buffered=False):
 # =========================
 @app.route('/')
 def home():
-    return render_template('home.html')
+    cur = get_cursor(buffered=True)
+    cur.execute("SELECT * FROM items ORDER BY id DESC LIMIT 6")
+    items = cur.fetchall()
+    cur.close()
+
+    return render_template('home.html', items=items)
 
 
 # =========================
@@ -87,17 +92,24 @@ def login():
 
         cur = get_cursor()
         cur.execute(
-            "SELECT * FROM register WHERE Email=%s AND Password=%s",
+            "SELECT Full_Name, Email FROM register WHERE Email=%s AND Password=%s",
             (email, password)
         )
         user = cur.fetchone()
         cur.close()
 
         if user:
-            session['email'] = email
+            session['email'] = user[1]   # email
+            session['name'] = user[0]    # name  ✅ FIX
+
+            # agar user rent ke liye aya tha
+            item_id = session.pop('pending_item', None)
+            if item_id:
+                return redirect(f'/payment/{item_id}')
+
             return redirect('/dashboard')
 
-        return "First register"
+        return "Invalid email or password. Please register first."
 
     return render_template('login.html')
 
@@ -306,18 +318,15 @@ def rent(item_id):
 def auth():
     return render_template('auth.html')
 
-
-
 # =========================
 # PAYMENT PAGE
+#=========================
+@app.route('/payment/<int:item_id>')
+def payment(item_id):
+    if 'email' not in session:
+        return redirect('/login')
 
-# =========================
-# @app.route('/payment/<int:item_id>')
-# def payment(item_id):
-#     if 'email' not in session:
-#         return redirect('/login')
-
-#     return render_template('payment.html', item_id=item_id)
+    return render_template('payment.html', item_id=item_id)
 
 # =========================
 # MY RENTALS (USER HISTORY)

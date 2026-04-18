@@ -18,8 +18,6 @@
 
     <div class="nav-container">
         <ul class="nav-links">
-
-        <li><a href="/items">Available Items</a></li>
         <li><a href="/register">Register</a></li>
         <li><a href="/login">Login</a></li>
       
@@ -34,6 +32,34 @@
     <p>Your one-stop platform for renting anything you need</p>
     <a href="/items" class="btn">Explore Now</a>
 </div>
+
+
+<!-- Featured Items -->
+<div class="featured">
+    <h2>Featured Items</h2>
+
+    <div class="items">
+        {% for item in items %}
+            <div class="item-card">
+                <img src="{{ url_for('static', filename='uploads/' + item[5]) }}" alt="item">
+                <h3>{{ item[1] }}</h3>
+                <p>₹{{ item[2] }}</p>
+                <a href="/rent/{{item[0]}}" class="rent-btn">Rent Now</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="view-all">
+        <a href="/items" class="btn">View All</a>
+    </div>
+</div>
+
+
+
+
+
+
+
 
 <!-- Stats Section -->
 <div class="stats">
@@ -72,6 +98,12 @@
         <p>Verified users and safe platform</p>
     </div>
 </div>
+
+
+
+
+
+
 
 <!-- Footer -->
 <footer>

@@ -274,36 +274,6 @@ def my_items():
     return render_template('my_items.html', items=data)
 
 
-# =========================
-# RENT (AGREEMENT)
-# =========================
-@app.route('/rent/<int:item_id>', methods=['GET', 'POST'])
-def rent(item_id):
-    if 'email' not in session:
-        return redirect(url_for('login'))
-
-    if request.method == 'POST':
-        name   = request.form.get('name')
-        adhar  = request.form.get('adhar')
-        mobile = request.form.get('mobile')
-        email  = session['email']
-
-        cur = get_cursor()
-        cur.execute(
-            "INSERT INTO rentals (item_id, name, adhar, mobile, email) VALUES (%s, %s, %s, %s, %s)",
-            (item_id, name, adhar, mobile, email)
-        )
-        db.commit()
-
-        session['rental_id'] = cur.lastrowid
-        # ✅ Store item_id in session so payment page knows which item to charge
-        session['paying_item_id'] = item_id
-        cur.close()
-
-        return redirect('/payment')
-
-    return render_template('rent.html', item_id=item_id)
-
 
 # =========================
 # PAYMENT PAGE

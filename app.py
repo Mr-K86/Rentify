@@ -51,21 +51,25 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        Full_Name = request.form['Full_Name']
-        Email = request.form['Email']
-        Password = request.form['Password']
+        name = request.form['Full_Name']
+        email = request.form['Email']
+        password = request.form['Password']
 
-        cur = get_cursor()
-        cur.execute(
-            "INSERT INTO register (Full_Name, Email, Password) VALUES (%s, %s, %s)",
-            (Full_Name, Email, Password)
+        cursor.execute("SELECT * FROM register WHERE Email=%s", (email,))
+        exist = cursor.fetchone()
+
+        if exist:
+            return "Already registered, please login"
+
+        cursor.execute(
+            "INSERT INTO register (Full_Name, Email, Password) VALUES (%s,%s,%s)",
+            (name, email, password)
         )
         db.commit()
-        cur.close()
 
-        return redirect(url_for('login'))
+        return redirect('/login')
 
-    return render_template("register.html")
+    return render_template('register.html')
 
 
 # =========================
@@ -77,17 +81,19 @@ def login():
         email = request.form['Email']
         password = request.form['Password']
 
-        cur = get_cursor(buffered=True)
-        cur.execute("SELECT * FROM register WHERE Email=%s AND Password=%s", (email, password))
-        user = cur.fetchone()
-        cur.close()
+        cursor.execute("SELECT * FROM register WHERE Email=%s AND Password=%s", (email, password))
+        user = cursor.fetchone()
 
         if user:
-            session['email'] = user[2]
-            session['name'] = user[1]
-            return redirect(url_for('dashboard'))
-        else:
-            return "Invalid email or password."
+            session['email'] = email
+
+            item_id = session.pop('pending_item', None)
+            if item_id:
+                return redirect(f'/payment/{item_id}')
+
+            return redirect('/dashboard')
+
+        return "First register"
 
     return render_template('login.html')
 
@@ -274,22 +280,40 @@ def my_items():
     return render_template('my_items.html', items=data)
 
 
+# =========================rent CHECK LOGIN 
+@app.route('/check_login')
+def check_login():
+    if 'email' in session:
+        return {"logged_in": True}
+    return {"logged_in": False}
+
+
+
+# =========================
+# RENT ITEM
+# =========================
+@app.route('/rent/<int:item_id>')
+def rent(item_id):
+    session['pending_item'] = item_id  # optional (future use)
+    return redirect('/auth')
+
+# =========================auth route 
+@app.route('/auth')
+def auth():
+    return render_template('auth.html')
+
+
 
 # =========================
 # PAYMENT PAGE
 
 # =========================
-@app.route('/payment')
-def payment():
-    if 'email' not in session:
-        return redirect(url_for('login'))
+# @app.route('/payment/<int:item_id>')
+# def payment(item_id):
+#     if 'email' not in session:
+#         return redirect('/login')
 
-    item_id = session.get('paying_item_id')
-    if not item_id:
-        return "Session expired. Please start again."
-
-    return render_template('payment.html', item_id=item_id)
-
+#     return render_template('payment.html', item_id=item_id)
 
 # =========================
 # MY RENTALS (USER HISTORY)

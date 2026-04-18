@@ -14,10 +14,7 @@
     <!-- Razorpay Script -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <!-- External JS -->
-    <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
-
-
+    
 </head>
 <body>
 
@@ -33,6 +30,7 @@
         <li><a href="/contact">Contact</a></li>
 
     </ul>
+</div>
 </nav>
 
     <div class="payment-container">
@@ -44,6 +42,10 @@
 <footer>
     <p>© 2026 Rentify. All Rights Reserved.</p>
 </footer>
+
+<!-- External JS -->
+    <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+
 
 
 </body>

@@ -28,7 +28,7 @@ db = mysql.connector.connect(
     host="localhost",
     user="root",
     password="NewPassword@123",
-    database="rentify2"
+    database="rentify"
 )
 
 

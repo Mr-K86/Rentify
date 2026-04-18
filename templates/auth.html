@@ -1,5 +1,45 @@
-<h2>Continue to Rentify</h2>
+<!DOCTYPE html>
+<html>
+<head>
 
-<a href="/login">Login</a>
-<br>
-<a href="/register">Register</a>
+    <title>Rentify</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">Rentify</div>
+
+    <div class="nav-container">
+        <ul class="nav-links">
+            <li><a href="/items">Available Items</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- AUTH CONTENT -->
+<div class="auth-box">
+    <h2>Continue to Rentify</h2>
+
+    <a href="/login" class="btn">Login</a>
+    <br><br>
+    <a href="/register" class="btn">Register</a>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 Rentify. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

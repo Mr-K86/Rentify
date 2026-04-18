@@ -55,17 +55,21 @@ def register():
         email = request.form['Email']
         password = request.form['Password']
 
-        cursor.execute("SELECT * FROM register WHERE Email=%s", (email,))
-        exist = cursor.fetchone()
+        cur = get_cursor()   # ✅ create cursor
+
+        cur.execute("SELECT * FROM register WHERE Email=%s", (email,))
+        exist = cur.fetchone()
 
         if exist:
+            cur.close()
             return "Already registered, please login"
 
-        cursor.execute(
+        cur.execute(
             "INSERT INTO register (Full_Name, Email, Password) VALUES (%s,%s,%s)",
             (name, email, password)
         )
         db.commit()
+        cur.close()
 
         return redirect('/login')
 
@@ -81,16 +85,16 @@ def login():
         email = request.form['Email']
         password = request.form['Password']
 
-        cursor.execute("SELECT * FROM register WHERE Email=%s AND Password=%s", (email, password))
-        user = cursor.fetchone()
+        cur = get_cursor()
+        cur.execute(
+            "SELECT * FROM register WHERE Email=%s AND Password=%s",
+            (email, password)
+        )
+        user = cur.fetchone()
+        cur.close()
 
         if user:
             session['email'] = email
-
-            item_id = session.pop('pending_item', None)
-            if item_id:
-                return redirect(f'/payment/{item_id}')
-
             return redirect('/dashboard')
 
         return "First register"

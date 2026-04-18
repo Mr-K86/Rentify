@@ -1,0 +1,39 @@
+
+
+/* Center container */
+.auth-box {
+    width: 320px;
+    margin: 100px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* Heading */
+.auth-box h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Buttons */
+.auth-box a.btn {
+    display: block;
+    padding: 12px;
+    margin: 10px 0;
+    background: #1abc9c;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+.auth-box a.btn:hover {
+     background: #66c9b3;
+    color: white;
+}
+
+

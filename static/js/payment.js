@@ -1,50 +1,43 @@
-function payNow(item_id) {
 
-    fetch(`/create_order/${item_id}`)
-    .then(res => res.json())
-    .then(order => {
+document.addEventListener("DOMContentLoaded", function () {
 
-        if (!order.id) {
-            alert("Order creation failed");
-            return;
-        }
+    console.log("DOM Loaded");
 
-        var options = {
-            key: "rzp_live_SeE0JX90xaFfzU",
-            amount: order.amount,
-            currency: order.currency,
-            name: "Rentify",
-            description: "Rental Payment",
-            order_id: order.id,
+    const btn = document.getElementById("payBtn");
 
-            handler: function (response) {
+    if (!btn) {
+        console.log("Button NOT found ❌");
+        return;
+    }
 
-                fetch('/verify_payment', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(response)
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status === "success") {
-                        alert("Payment Successful");
-                        window.location.href = "/my_rentals";
-                    } else {
-                        alert("Payment failed");
-                    }
-                });
-            },
+    console.log("Button found ✅");
 
-            theme: {
-                color: "#3399cc"
-            }
-        };
+    btn.addEventListener("click", function () {
 
-        var rzp = new Razorpay(options);
-        rzp.open();
-    })
-    .catch(err => {
-        console.log(err);
-        alert("Server error in order creation");
+        console.log("Button Clicked 🔥");
+
+        const itemId = btn.getAttribute("data-item-id");
+
+        fetch('/create_order/' + itemId)
+        .then(res => res.json())
+        .then(order => {
+
+            var options = {
+                "key": "rzp_live_SeE0JX90xaFfzU",
+                "amount": order.amount,
+                "currency": "INR",
+                "name": "Rentify",
+                "order_id": order.id,
+
+                "handler": function (response){
+                    alert("Payment Success");
+                }
+            };
+
+            var rzp = new Razorpay(options);
+            rzp.open();
+        });
+
     });
-}
+
+});

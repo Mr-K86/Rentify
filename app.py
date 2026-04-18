@@ -214,6 +214,9 @@ def show_items():
 # =========================
 @app.route('/create_order/<int:item_id>')
 def create_order(item_id):
+    if 'email' not in session:
+        return jsonify({"error": "Not logged in"}), 401
+
     cur = get_cursor(buffered=True)
     cur.execute("SELECT price FROM items WHERE id=%s", (item_id,))
     row = cur.fetchone()
@@ -222,17 +225,15 @@ def create_order(item_id):
     if not row:
         return jsonify({"error": "Item not found"}), 404
 
-    price = int(row[0])
-
-    if price is None:
-        return jsonify({"error": "Price missing"}), 400
+    amount = int(row[0]) * 100  # paise
 
     order = razorpay_client.order.create({
-        "amount": int(price) * 100,
+        "amount": amount,
         "currency": "INR",
         "payment_capture": 1
     })
 
+    # 👉 जिस item के लिए payment हो रही है
     session['paying_item_id'] = item_id
 
     return jsonify(order)
@@ -245,11 +246,10 @@ def create_order(item_id):
 def verify_payment():
     data = request.get_json()
 
-    order_id   = data['razorpay_order_id']
-    payment_id = data['razorpay_payment_id']
-    signature  = data['razorpay_signature']
+    order_id   = data.get('razorpay_order_id')
+    payment_id = data.get('razorpay_payment_id')
+    signature  = data.get('razorpay_signature')
 
-  
     generated_signature = hmac.new(
         bytes("LNhtRuwLhWj038uA0EfLplqO", 'utf-8'),
         bytes(order_id + "|" + payment_id, 'utf-8'),
@@ -257,25 +257,25 @@ def verify_payment():
     ).hexdigest()
 
     if generated_signature == signature:
-        rental_id = session.get('rental_id')
-
-        if not rental_id:
-            return jsonify({"status": "failed", "message": "Session expired — rental_id missing"})
+        item_id = session.get('paying_item_id')
+        email   = session.get('email')
 
         cur = get_cursor()
         cur.execute("""
-            UPDATE rentals
-            SET payment_method='Online',
-                status='completed',
-                payment_id=%s
-            WHERE id=%s
-        """, (payment_id, rental_id))
+            INSERT INTO rentals (item_id, email, payment_method, status, payment_id)
+            VALUES (%s, %s, 'Online', 'completed', %s)
+        """, (item_id, email, payment_id))
         db.commit()
         cur.close()
 
         return jsonify({"status": "success"})
     else:
-        return jsonify({"status": "failed", "message": "Signature mismatch"})
+        return jsonify({"status": "failed"})
+
+# =========================suceess PAGE =====
+@app.route('/success')
+def success():
+    return render_template('success.html')
 
 
 # =========================

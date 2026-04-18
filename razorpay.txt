@@ -1,0 +1,11 @@
+
+key_id  = rzp_live_SeE0JX90xaFfzU 
+
+key_secret = LNhtRuwLhWj038uA0EfLplqO
+
+
+
+ 
+key_id     =   rzp_test_Sf1vEieIFBRH16
+
+key_secret =  OSjtPj1qf2Vp2xU1j5fN4e6E

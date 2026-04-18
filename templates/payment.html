@@ -34,10 +34,7 @@
 </div>
 </nav>
 
-    <div class="payment-container">
-        <h2>Complete Payment</h2>
-        <button onclick="payNow({{item_id}})">Pay Now</button>
-    </div>
+    
 
 <!-- Footer -->
 <footer>
@@ -47,6 +44,12 @@
 <!-- External JS -->
     <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
 
+    <div class="payment-container">
+     <button id="payBtn" data-item-id="{{ item_id }}">Pay Now</button>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+</body>
 
 
 </body>

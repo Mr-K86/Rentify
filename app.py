@@ -56,30 +56,37 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+
         name = request.form['Full_Name']
+        mobile = request.form['Mobile']
         email = request.form['Email']
+        adhar = request.form['Adhar_No']
+        pan = request.form['Pan_No']
         password = request.form['Password']
 
-        cur = get_cursor()   # ✅ create cursor
+        cur = get_cursor()
 
-        cur.execute("SELECT * FROM register WHERE Email=%s", (email,))
+        # check duplicate email
+        cur.execute("SELECT id FROM register WHERE Email=%s", (email,))
         exist = cur.fetchone()
 
         if exist:
             cur.close()
-            return "Already registered, please login"
+            return "User already exists"
 
-        cur.execute(
-            "INSERT INTO register (Full_Name, Email, Password) VALUES (%s,%s,%s)",
-            (name, email, password)
-        )
+        # ✅ FIXED INSERT (ALL REQUIRED FIELDS)
+        cur.execute("""
+            INSERT INTO register 
+            (Full_Name, Mobile, Email, Adhar_No, Pan_No, password)
+            VALUES (%s,%s,%s,%s,%s,%s)
+        """, (name, mobile, email, adhar, pan, password))
+
         db.commit()
         cur.close()
 
         return redirect('/login')
 
     return render_template('register.html')
-
 
 # =========================
 # LOGIN

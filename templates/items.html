@@ -20,9 +20,13 @@
     <div class="nav-container">
     <ul class="nav-links">
         <!-- Navigation links -->
-        <li><a href="/">Home</a></li>
-       
-       
+         <li><a href="/">Home</a></li>
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/about">About Us</a></li>
+
+
     </ul>
 </nav>
 
@@ -38,7 +42,9 @@
 
         <!-- Item Image -->
         <!-- Agar image hai to show karega, warna default image -->
+         
         <img src="{{ url_for('static', filename='uploads/' + item[5]) if item[5] else url_for('static', filename='uploads/default.png') }}" class="item-img">
+        
 
         <!-- Item Name -->
         <h3>{{ item[1] }}</h3>

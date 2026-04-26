@@ -61,7 +61,7 @@ def register():
         mobile = request.form['Mobile']
         email = request.form['Email']
         adhar = request.form['Adhar_No']
-        pan = request.form['Pan_No']
+       
         password = request.form['Password']
 
         cur = get_cursor()
@@ -77,9 +77,9 @@ def register():
         # ✅ FIXED INSERT (ALL REQUIRED FIELDS)
         cur.execute("""
             INSERT INTO register 
-            (Full_Name, Mobile, Email, Adhar_No, Pan_No, password)
-            VALUES (%s,%s,%s,%s,%s,%s)
-        """, (name, mobile, email, adhar, pan, password))
+            (Full_Name, Mobile, Adhar_No, Email, password)
+            VALUES (%s,%s,%s,%s,%s)
+        """, (name, mobile, adhar, email, password))
 
         db.commit()
         cur.close()
@@ -147,6 +147,13 @@ def logout():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+# =========================
+# ABOUT PAGE
+# =========================
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 # =========================
@@ -340,32 +347,31 @@ def payment(item_id):
 # =========================
 @app.route('/my_rentals')
 def my_rentals():
-    if 'email' not in session:
-        return redirect(url_for('login'))
+	if 'email' not in session:
+		return redirect(url_for('login'))
 
-    email = session['email']
-
-    cur = get_cursor(buffered=True)
-    cur.execute("""
-        SELECT
-            items.name,
-            items.price,
-            items.image,
-            rentals.name,
-            rentals.mobile,
-            rentals.adhar,
-            rentals.payment_method,
-            rentals.status
-        FROM rentals
-        JOIN items ON rentals.item_id = items.id
-        WHERE rentals.email = %s
-    """, (email,))
-    data = cur.fetchall()
-    cur.close()
-
-    return render_template('my_rentals.html', rentals=data)
-
-
+	email = session['email']
+	cur = get_cursor(buffered=True)
+	cur.execute("SELECT id FROM register WHERE Email = %s", (email,))
+	user = cur.fetchone()
+	if not user:
+		return "User not Found"
+	user_id = user[0]
+	cur.execute(""" SELECT 
+		items.name,
+		items.price,
+		items.image,
+		rentals.payment_method,
+		rentals.rent_start
+		FROM rentals 
+		JOIN items ON rentals.item_id = items.id
+		WHERE rentals.user_id = %s
+	""", (user_id,))
+	
+	data = cur.fetchall()
+	cur.close()
+	
+	return render_template('my_rentals.html', rentals=data)
 # =========================
 # RUN APP
 # =========================

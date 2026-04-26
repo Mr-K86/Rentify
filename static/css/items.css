@@ -8,6 +8,7 @@
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
     padding: 20px;
+  
 }
 
 .item-card {
@@ -15,9 +16,13 @@
     padding: 15px;
     border-radius: 10px;
     text-align: center;
+
     
     
 }
+
+
+
 
 .item-card:hover {
     background: #4ca1af;

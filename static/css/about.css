@@ -1,0 +1,59 @@
+/* ===== GENERAL SECTION FIX ===== */
+section {
+    width: 100%;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+/* ===== HERO ===== */
+.hero {
+    background: linear-gradient(to right, #2c3e50, #4ca1af);
+    color: white;
+}
+
+/* ===== ABOUT ===== */
+.about {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* ===== MISSION ===== */
+.mission {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;   /* 🔥 IMPORTANT */
+}
+
+.mission div {
+    max-width: 300px;
+}
+
+/* ===== FEATURES ===== */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* ===== TEAM + CTA ===== */
+.team, .cta {
+    margin-top: 20px;
+}
+
+/* ===== BUTTON ===== */
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #00c6ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}

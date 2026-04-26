@@ -23,7 +23,7 @@
 .item-card {
     background: white;
     border-radius: 12px;
-    padding: 15px;
+    padding: 5px;
     text-align: center;
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
     transition: 0.3s ease;
@@ -39,7 +39,7 @@
 /* Image */
 .item-img {
     width: 100%;
-    height: 150px;
+    height: 260px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -48,6 +48,7 @@
 /* Text */
 .item-card h3 {
     margin: 10px 0;
+   
 }
 
 .item-card p {

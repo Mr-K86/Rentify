@@ -5,10 +5,11 @@
 
     <!-- CSS file connect -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+   
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/items.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
 
 </head>
 
@@ -38,7 +39,7 @@
 
     <!-- Loop: database se items aa rahe hain -->
     {% for item in items %}
-    <div class="item-card">
+    <div class="glass-box">
 
         <!-- Item Image -->
         <!-- Agar image hai to show karega, warna default image -->

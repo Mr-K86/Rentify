@@ -2,74 +2,60 @@
 <html>
 <head>
     <title>Add Item</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_item.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    
 </head>
+
 <body>
 
-
-<!-- Navbar -->
+<!-- NAVBAR -->
 <nav class="navbar">
     <div class="logo">Rentify</div>
 
     <div class="nav-container">
         <ul class="nav-links">
-
-        <li><a href="/">Home</a></li>
-        <li><a href="/register">Register</a></li>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/items">Items</a></li>
-        <li><a href="/add_item">Add Item</a></li>
-        <li><a href="/my_rentals">My Rentals</a></li>
-        <li><a href="/about">About Us</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/logout">Logout</a></li>
-       
-
-    </ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/items">Items</a></li>
+            <li><a href="/add_item">Add Item</a></li>
+            <li><a href="/my_rentals">My Rentals</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
 </nav>
 
-<h2>Add Item</h2>
+<!-- ADD ITEM FORM -->
+<div class="glass-box">
+    <h2>Add Item</h2>
 
-<form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
 
-    Item Name: <br>
-    <input type="text" name="name" required><br><br>
+        <input type="text" name="name" placeholder="Item Name" required>
 
-    Price (per day): <br>
-    <input type="number" name="price" required><br><br>
+        <input type="number" name="price" placeholder="Price per day" required>
 
-    Image: <br>
-<input type="file" name="image" accept="image/*" required><br><br>
+        <input type="file" name="image" accept="image/*" required>
 
-    Contact Number: <br>
-<input type="text" name="contact"
-    pattern="[0-9]{10}"
-    maxlength="10"
-    placeholder="Enter 10 digit number"
-    required
-    oninvalid="this.setCustomValidity('Please enter exactly 10 digits')"
-    oninput="this.setCustomValidity('')">
+        <input type="text" name="contact"
+               pattern="[0-9]{10}"
+               maxlength="10"
+               placeholder="Enter 10 digit number"
+               required>
 
-    <button type="submit">Add Item</button>
+        <button type="submit">Add Item</button>
 
-</form>
-
-<div class="add-item-box">
-    <form method="POST">
-        <!-- inputs -->
     </form>
 </div>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
     <p>© 2026 Rentify. All Rights Reserved.</p>
 </footer>
-
 
 </body>
 </html>

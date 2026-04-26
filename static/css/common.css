@@ -1,16 +1,16 @@
-/* ===== BACKGROUND ===== */
+/* ===== GLOBAL BACKGROUND ===== */
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    height: 100vh;
+    min-height: 100vh;
 
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     display: flex;
     flex-direction: column;
 }
 
-/* ===== CENTER CONTAINER ===== */
-.login-box {
+/* ===== GLASS CONTAINER (REUSABLE) ===== */
+.glass-box {
     width: 350px;
     margin: auto;
     padding: 40px;
@@ -27,22 +27,15 @@ body {
     animation: floatBox 3s ease-in-out infinite;
 }
 
-/* ===== FLOAT ANIMATION ===== */
+/* FLOAT ANIMATION */
 @keyframes floatBox {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
 
-/* ===== HEADING ===== */
-.login-box h2 {
-    font-size: 30px;
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-}
-
-/* ===== INPUT GROUP ===== */
-.login-box input {
+/* INPUT */
+.glass-box input {
     width: 100%;
     padding: 12px;
     margin: 12px 0;
@@ -57,19 +50,17 @@ body {
     transition: 0.3s;
 }
 
-/* Input focus glow */
-.login-box input:focus {
+.glass-box input:focus {
     background: rgba(255,255,255,0.2);
     box-shadow: 0 0 10px #00c6ff;
 }
 
-/* Placeholder */
-.login-box input::placeholder {
+.glass-box input::placeholder {
     color: #ccc;
 }
 
-/* ===== BUTTON ===== */
-.login-box button {
+/* BUTTON */
+.glass-box button {
     width: 100%;
     padding: 12px;
     margin-top: 15px;
@@ -79,20 +70,18 @@ body {
 
     background: linear-gradient(135deg, #00c6ff, #0072ff);
     color: white;
-    font-size: 16px;
 
     cursor: pointer;
     transition: 0.3s;
 }
 
-/* Button hover glow */
-.login-box button:hover {
+.glass-box button:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px #00c6ff;
 }
 
-/* ===== NEON BORDER EFFECT ===== */
-.login-box::before {
+/* NEON BORDER */
+.glass-box::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -100,18 +89,12 @@ body {
     padding: 2px;
 
     background: linear-gradient(45deg, #00c6ff, #0072ff, #00c6ff);
-    -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
-            mask-composite: exclude;
+    mask-composite: exclude;
 
     pointer-events: none;
-}
-
-/* ===== FOOTER FIX ===== */
-footer {
-    text-align: center;
-    color: white;
-    padding: 10px;
 }

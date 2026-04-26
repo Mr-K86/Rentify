@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
 
 </head>
 
@@ -38,7 +39,7 @@
 <div class="items-container">
 
     {% for item in items %}
-    <div class="item-card">
+    <div class="glass-box">
         <img src="{{ url_for('static', filename='uploads/' + item[5]) if item[5] else url_for('static', filename='uploads/default.png') }}" class="item-img">
         <h3>{{ item[1] }}</h3>
         <p>₹{{ item[2] }} / day</p>
